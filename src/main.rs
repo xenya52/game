@@ -69,14 +69,38 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     }
 }
 
+fn moveable(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>) -> bool {
+    if let Some((x, y)) = coordinates.get(0) {
+        if *x > 0 {
+            let mut x_usize = *x as usize;
+            let mut y_usize = *y as usize;
+
+            match usr_input {
+                'w' => y_usize -= 1,
+                'a' => x_usize -= 1,
+                's' => y_usize += 1,
+                'd' => x_usize += 1,
+                _ => println!("Error")
+            }
+
+            if board[y_usize][x_usize] == '#' {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 fn handle_input(usr_input: char, board: &mut Board) {
     let coordinates: Vec<(u32, u32)> = find_player_in_board(board);
-    match usr_input {
-        'w' => move_up(coordinates ,board),
-        'a' => move_left(coordinates, board),
-        's' => move_down(coordinates, board),
-        'd' => move_right(coordinates, board),
-        _ => println!("Error")
+    if moveable(board, usr_input, &coordinates) {
+        match usr_input {
+            'w' => move_up(coordinates ,board),
+            'a' => move_left(coordinates, board),
+            's' => move_down(coordinates, board),
+            'd' => move_right(coordinates, board),
+            _ => println!("Error")
+        }
     }
 }
 fn init_board() -> Board {
