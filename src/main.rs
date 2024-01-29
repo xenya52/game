@@ -1,11 +1,26 @@
-use std::{fmt::Error, char};
-
+use std::{char, collections::btree_map::Range, fmt::Error};
+pub use rand::{thread_rng, Rng, seq::SliceRandom};
 pub use crossterm_input::{input, AsyncReader, InputEvent, KeyEvent, MouseButton, MouseEvent, SyncReader, TerminalInput};
 pub use colorized::*;
 
 type Title = char;
 type Board = Vec<Vec<Title>>;
 
+fn add_random_tile(board: &mut Board) {
+    let mut empty_tiles = Vec::new();
+    for (i, row) in board.iter().enumerate() {
+        for (j, &tile) in row.iter().enumerate() {
+            if tile == '#' {
+                empty_tiles.push((i, j));
+            }
+        }
+    }
+
+    if let Some(&(x, y)) = empty_tiles.choose(&mut thread_rng()) {
+        let value: char = if thread_rng().gen_bool(0.9) { 'x' } else { 'X' };
+        board[x][y] = value;
+    }
+}
 
 fn get_user_input() -> char {
     let mut input = input();
@@ -104,7 +119,16 @@ fn handle_input(usr_input: char, board: &mut Board) {
     }
 }
 fn init_board() -> Board {
-    vec![vec!['#';16];16]
+    let mut board = vec![vec!['#';16];16];
+    let mut count = 0;
+    loop {
+        count += 1;
+        add_random_tile(&mut board);
+        if count == 10 {
+            break;
+        }
+    }
+    return board;
 }
 fn find_player_in_board(board: &mut Board) -> Vec<(u32, u32)> {
     let mut coordinates = Vec::new();
@@ -131,6 +155,9 @@ fn print_board(board: &mut Board) {
         for (j,row) in row.iter().enumerate() {
             if row == &'@' {
                 print!("{}",Colors::MagentaFg.value());
+            }
+            else if row == &'x' || row == &'X' {
+                print!("{}",Colors::BlackFg.value());
             }
             else {
                 print!("{}",Colors::GreenFg.value());
