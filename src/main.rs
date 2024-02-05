@@ -168,37 +168,37 @@ fn set_preditor_in_board(board: &mut Board) {
     board[c[0]][c[1]] = 'ö';
 }
 fn move_preditor(board: &mut Board) {
-    if thread_rng().gen_bool(0.9)
+    let possible_move: bool = rand::thread_rng().gen_bool(0.5);
+    println!("{}",possible_move);
+    if possible_move
      {
         let co_preditor: Vec<(u32,u32)> = find_char_in_board(board, 'ö');
         let co_player: Vec<(u32,u32)> = find_char_in_board(board, '@');
         // Assuming both vectors are guaranteed to have at least one element.
         // You should add checks to ensure they are not empty to avoid runtime panics.
         let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
-        let resulty: i32 = co_preditor[1].1 as i32 - co_player[1].1 as i32; // Subtract y coordinates
-
+        let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
         if resultx > 0 {
-
+            if moveable(board, 'a', &co_preditor) {
+                move_left(co_preditor, board);
+            }
         }
-        else {
-
+        else if resultx < 0 {
+            if moveable(board, 'd', &co_preditor) {
+                move_right(co_preditor, board);
+            }
         }
-        if resulty > 0 {
-
+        else if resulty < 0 {
+            if moveable(board, 's', &co_preditor) {
+                move_down(co_preditor, board);
+            }
         }
-        else {
-            
+        else if resulty > 0 {
+            if moveable(board, 'w', &co_preditor) {
+                move_up(co_preditor, board);
+            }
         }
-        // 5 , 4 / 5 , 8 y has changed into +
-        // 
-        //
-        //
-        //
-     } 
-    else 
-    {
-        
-    }
+     }
 }
 fn game_over(input: char) -> bool {
     if input == 'q' {
@@ -236,7 +236,8 @@ fn main() {
     while  !game_over(usr_input) {
         print_board(&mut board);
         usr_input = get_user_input();
-        handle_input(usr_input, &mut board)
+        handle_input(usr_input, &mut board);
+        move_preditor(&mut board);
     }
     println!("Hello, world!");
 }
