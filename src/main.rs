@@ -170,8 +170,25 @@ fn set_preditor_in_board(board: &mut Board) {
 fn move_preditor(board: &mut Board) {
     if thread_rng().gen_bool(0.9)
      {
-        let coordinates_preditor = find_char_in_board(board, 'ö');
-        let coordinates_player = find_char_in_board(board, '@');
+        let co_preditor: Vec<(u32,u32)> = find_char_in_board(board, 'ö');
+        let co_player: Vec<(u32,u32)> = find_char_in_board(board, '@');
+        // Assuming both vectors are guaranteed to have at least one element.
+        // You should add checks to ensure they are not empty to avoid runtime panics.
+        let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
+        let resulty: i32 = co_preditor[1].1 as i32 - co_player[1].1 as i32; // Subtract y coordinates
+
+        if resultx > 0 {
+
+        }
+        else {
+
+        }
+        if resulty > 0 {
+
+        }
+        else {
+            
+        }
         // 5 , 4 / 5 , 8 y has changed into +
         // 
         //
