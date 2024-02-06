@@ -50,7 +50,7 @@ fn get_user_input() -> char {
         }
     }   
 }
-fn move_up(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
+fn move_up(coordinates: &Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
         // Make sure we are not on the first row and the coordinates are within the board boundaries
         if *y > 0 && *y as usize <= board.len() && *x as usize <= board[0].len() {
@@ -64,7 +64,7 @@ fn move_up(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
         }
     }
 }
-fn move_down(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
+fn move_down(coordinates: &Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
         if *y as usize + 1 < board.len() {
             let x_usize = *x as usize;
@@ -77,7 +77,7 @@ fn move_down(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     }
 }
 
-fn move_right(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
+fn move_right(coordinates: &Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
         if *x as usize + 1 < board[0].len() {
             let x_usize = *x as usize;
@@ -90,7 +90,7 @@ fn move_right(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     }
 }
 
-fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
+fn move_left(coordinates: &Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let x_usize = *x as usize;
@@ -129,10 +129,10 @@ fn handle_input(usr_input: char, board: &mut Board) {
     let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
     if moveable(board, usr_input, &coordinates) {
         match usr_input {
-            'w' => move_up(coordinates ,board),
-            'a' => move_left(coordinates, board),
-            's' => move_down(coordinates, board),
-            'd' => move_right(coordinates, board),
+            'w' => move_up(&coordinates ,board),
+            'a' => move_left(&coordinates, board),
+            's' => move_down(&coordinates, board),
+            'd' => move_right(&coordinates, board),
             _ => println!("Error")
         }
     }
@@ -180,22 +180,34 @@ fn move_preditor(board: &mut Board) {
         let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
         if resultx > 0 {
             if moveable(board, 'a', &co_preditor) {
-                move_left(co_preditor, board);
+                move_left(&co_preditor, board);
+            }
+            else{
+                try_move_alternative(board, &co_preditor);
             }
         }
         else if resultx < 0 {
             if moveable(board, 'd', &co_preditor) {
-                move_right(co_preditor, board);
+                move_right(&co_preditor, board);
+            }
+            else {
+                try_move_alternative(board, &co_preditor);
             }
         }
         else if resulty < 0 {
             if moveable(board, 's', &co_preditor) {
-                move_down(co_preditor, board);
+                move_down(&co_preditor, board);
+            }
+            else {
+                try_move_alternative(board, &co_preditor);
             }
         }
         else if resulty > 0 {
             if moveable(board, 'w', &co_preditor) {
-                move_up(co_preditor, board);
+                move_up(&co_preditor, board);
+            }
+            else {
+                try_move_alternative(board, &co_preditor);
             }
         }
      }
@@ -205,6 +217,32 @@ fn game_over(input: char) -> bool {
         return true;
     }
     return  false;
+}
+fn try_move_alternative(board: &mut Board, co_preditor: &Vec<(u32, u32)>) {
+    // Prioritätsliste der Richtungen, kann basierend auf dem Spielkontext angepasst werden
+    let directions = vec!['w', 'a', 's', 'd']; // Oben, Links, Unten, Rechts als Beispiele
+
+    for &direction in &directions {
+        match direction {
+            'w' if moveable(board, 'w', co_preditor) => {
+                move_up(co_preditor, board);
+                break; // Bewegung erfolgreich, Schleife verlassen
+            },
+            'a' if moveable(board, 'a', co_preditor) => {
+                move_left(co_preditor, board);
+                break; // Bewegung erfolgreich, Schleife verlassen
+            },
+            's' if moveable(board, 's', co_preditor) => {
+                move_down(co_preditor, board);
+                break; // Bewegung erfolgreich, Schleife verlassen
+            },
+            'd' if moveable(board, 'd', co_preditor) => {
+                move_right(co_preditor, board);
+                break; // Bewegung erfolgreich, Schleife verlassen
+            },
+            _ => continue, // Wenn Bewegung in dieser Richtung nicht möglich ist, nächste Richtung probieren
+        }
+    }
 }
 fn print_board(board: &mut Board) {
     for (i, row) in board.iter().enumerate() {
