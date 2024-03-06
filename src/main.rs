@@ -1,11 +1,11 @@
+mod world;
+use world::{Board, Title};
+
 use std::{char, collections::btree_map::Range, fmt::Error};
 use rand::random;
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
 pub use crossterm_input::{input, AsyncReader, InputEvent, KeyEvent, MouseButton, MouseEvent, SyncReader, TerminalInput};
 pub use colorized::*;
-
-type Title = char;
-type Board = Vec<Vec<Title>>;
 
 fn random_coordinates(board: &mut Board) -> Vec<usize> {
     let mut empty_tiles = Vec::new();
