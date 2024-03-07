@@ -1,2 +1,2 @@
-mod grid;
-pub use grid::{Board, Title};
+mod generate_board;
+pub use generate_board::{init_board, Board};
