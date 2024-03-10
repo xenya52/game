@@ -24,23 +24,53 @@ fn get_rdm_xy(board: &mut Board) -> Vec<usize> {
         return vec![0,0]
     }
 }
-
 fn add_random_tile(board: &mut Board) {
-    let mut empty_tiles = Vec::new();
-    for (i, row) in board.iter().enumerate() {
-        for (j, &tile) in row.iter().enumerate() {
-            if tile == '#' {
-                empty_tiles.push((i, j));
-            }
+    let value: char = if thread_rng().gen_bool(0.9) { 'x' } else { 'X' };
+    let c:Vec<usize> = get_rdm_xy(board);
+    board[c[0]][c[1]] = value;
+}
+fn set_player_in_board(board: &mut Board) {
+    board[8][8] = '@';
+}
+fn set_preditor_in_board(board: &mut Board) {
+    let c:Vec<usize> = get_rdm_xy(board);
+    board[c[0]][c[1]] = 'ö';
+}
+fn init_board() -> Board {
+    let mut board = vec![vec!['#';16];16];
+    let mut count = 0;
+    loop {
+        count += 1;
+        add_random_tile(&mut board);
+        if count == 10 {
+            break;
         }
     }
-
-    if let Some(&(x, y)) = empty_tiles.choose(&mut thread_rng()) {
-        let value: char = if thread_rng().gen_bool(0.9) { 'x' } else { 'X' };
-        board[x][y] = value;
+    set_player_in_board(&mut board);
+    set_preditor_in_board(&mut board);
+    return board;
+}
+fn print_board(board: &mut Board) {
+    for (i, row) in board.iter().enumerate() {
+        for (j,row) in row.iter().enumerate() {
+            if row == &'@' {
+                print!("{}",Colors::BrightYellowFg.value());
+            }
+            else if row == &'ö' {
+                print!("{}",Colors::RedFg.value())
+            }
+            else if row == &'x' || row == &'X' {
+                print!("{}",Colors::BlackFg.value());
+            }
+            else {
+                print!("{}",Colors::GreenFg.value());
+            }
+            print!("{}", row);
+            print!("{}",Colors::Reset.value());
+        }
+        println!();
     }
 }
-
 fn get_user_input() -> char {
     let mut input = input();
     match input.read_char() {
@@ -49,6 +79,29 @@ fn get_user_input() -> char {
             'e'
         }
     }   
+}
+fn find_char_in_board(board: &mut Board, given: char) -> Vec<(u32, u32)> {
+    let mut coordinates = Vec::new();
+    for (y, row) in board.iter().enumerate() {
+        for (x, &char) in row.iter().enumerate() {
+            if char == given {
+                coordinates.push((x as u32, y as u32));
+            }
+        }
+    }
+    coordinates
+}
+fn handle_input(usr_input: char, board: &mut Board) {
+    let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
+    if alternative_preditor_move(board, usr_input, &coordinates) {
+        match usr_input {
+            'w' => move_up(coordinates ,board),
+            'a' => move_left(coordinates, board),
+            's' => move_down(coordinates, board),
+            'd' => move_right(coordinates, board),
+            _ => println!("Error")
+        }
+    }
 }
 fn move_up(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
@@ -102,8 +155,7 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
         }
     }
 }
-
-fn moveable(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>) -> bool {
+fn alternative_preditor_move(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>) -> bool {
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let mut x_usize = *x as usize;
@@ -124,49 +176,6 @@ fn moveable(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>) ->
     }
     return false;
 }
-
-fn handle_input(usr_input: char, board: &mut Board) {
-    let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
-    if moveable(board, usr_input, &coordinates) {
-        match usr_input {
-            'w' => move_up(coordinates ,board),
-            'a' => move_left(coordinates, board),
-            's' => move_down(coordinates, board),
-            'd' => move_right(coordinates, board),
-            _ => println!("Error")
-        }
-    }
-}
-fn init_board() -> Board {
-    let mut board = vec![vec!['#';16];16];
-    let mut count = 0;
-    loop {
-        count += 1;
-        add_random_tile(&mut board);
-        if count == 10 {
-            break;
-        }
-    }
-    return board;
-}
-fn find_char_in_board(board: &mut Board, given: char) -> Vec<(u32, u32)> {
-    let mut coordinates = Vec::new();
-    for (y, row) in board.iter().enumerate() {
-        for (x, &char) in row.iter().enumerate() {
-            if char == given {
-                coordinates.push((x as u32, y as u32));
-            }
-        }
-    }
-    coordinates
-}
-fn set_player_in_board(board: &mut Board) {
-    board[8][8] = '@';
-}
-fn set_preditor_in_board(board: &mut Board) {
-    let c:Vec<usize> = get_rdm_xy(board);
-    board[c[0]][c[1]] = 'ö';
-}
 fn move_preditor(board: &mut Board) {
     let possible_move: bool = rand::thread_rng().gen_bool(0.5);
     println!("{}",possible_move);
@@ -179,22 +188,22 @@ fn move_preditor(board: &mut Board) {
         let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
         let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
         if resultx > 0 {
-            if moveable(board, 'a', &co_preditor) {
+            if alternative_preditor_move(board, 'a', &co_preditor) {
                 move_left(co_preditor, board);
             }
         }
         else if resultx < 0 {
-            if moveable(board, 'd', &co_preditor) {
+            if alternative_preditor_move(board, 'd', &co_preditor) {
                 move_right(co_preditor, board);
             }
         }
         else if resulty < 0 {
-            if moveable(board, 's', &co_preditor) {
+            if alternative_preditor_move(board, 's', &co_preditor) {
                 move_down(co_preditor, board);
             }
         }
         else if resulty > 0 {
-            if moveable(board, 'w', &co_preditor) {
+            if alternative_preditor_move(board, 'w', &co_preditor) {
                 move_up(co_preditor, board);
             }
         }
@@ -205,27 +214,6 @@ fn game_over(input: char) -> bool {
         return true;
     }
     return  false;
-}
-fn print_board(board: &mut Board) {
-    for (i, row) in board.iter().enumerate() {
-        for (j,row) in row.iter().enumerate() {
-            if row == &'@' {
-                print!("{}",Colors::BrightYellowFg.value());
-            }
-            else if row == &'ö' {
-                print!("{}",Colors::RedFg.value())
-            }
-            else if row == &'x' || row == &'X' {
-                print!("{}",Colors::BlackFg.value());
-            }
-            else {
-                print!("{}",Colors::GreenFg.value());
-            }
-            print!("{}", row);
-            print!("{}",Colors::Reset.value());
-        }
-        println!();
-    }
 }
 fn main() {
     let mut board = init_board();
