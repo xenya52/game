@@ -7,11 +7,47 @@ use crate::{find_char_in_board, Board};
 //////////////////////
 //General game logic//
 //////////////////////
-pub fn game_over(input: char) -> bool {
+pub fn game_over(input: char, player: Entity) -> bool {
     if input == 'q' {
         return true;
     }
+    else if player.health == 0{
+        return true;
+    }
     return  false;
+}
+#[derive(Clone, Copy)]
+struct BasicNeeds {
+    starve: u32,
+    hydrate: u32,
+    convident: u32
+}
+#[derive(Clone, Copy)]
+pub struct Entity {
+    health: u32,
+    strengh: u32,
+    basic_needs: BasicNeeds
+}
+pub fn new_entity(_health: u32, _strengh: u32, _starve: u32, _hydrate: u32, _convident: u32) -> Entity {
+    Entity {
+        health: _health,
+        strengh: _strengh,
+        basic_needs: BasicNeeds {
+            starve: _starve,
+            hydrate: _hydrate,
+            convident: _convident
+        }
+    }
+}
+pub fn show_entity_status(entity: Entity) {
+    println!("<-=-=-=-=-=-=-=->");
+    println!("<Health: {}", entity.health);
+    println!("<Strengh: {}", entity.strengh);
+    println!("<~~~~~~~~~~~~~~~>");
+    println!("<Starvation {}", entity.basic_needs.starve);
+    println!("<Hydration {}", entity.basic_needs.hydrate);
+    println!("<Convinience {}", entity.basic_needs.convident);
+    println!("<-=-=-=-=-=-=-=->");
 }
 //////////////////////////////
 //General movement functions//
