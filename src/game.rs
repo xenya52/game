@@ -1,5 +1,5 @@
-use crossterm_input::{input, AsyncReader, InputEvent, KeyEvent, MouseButton, MouseEvent, SyncReader, TerminalInput};
-use std::{char, collections::btree_map::Range, fmt::Error};
+use crossterm_input::input;
+use std::char;
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
 //Own stuff lib.rs
 use crate::{find_char_in_board, Board};
@@ -11,7 +11,7 @@ pub fn game_over(input: char, player: Entity) -> bool {
     if input == 'q' {
         return true;
     }
-    else if player.health == 0{
+    else if dead_entity(player) {
         return true;
     }
     return  false;
@@ -48,6 +48,16 @@ pub fn show_entity_status(entity: Entity) {
     println!("<Hydration {}", entity.basic_needs.hydrate);
     println!("<Convinience {}", entity.basic_needs.convident);
     println!("<-=-=-=-=-=-=-=->");
+}
+pub fn dead_entity(entity: Entity) -> bool 
+{
+    if entity.health <= 0 ||
+       entity.basic_needs.hydrate <= 0 {
+        true
+    }
+    else {
+        false
+    }
 }
 //////////////////////////////
 //General movement functions//
