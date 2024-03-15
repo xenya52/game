@@ -26,12 +26,14 @@ struct BasicNeeds {
 pub struct Entity {
     health: u32,
     strengh: u32,
+    actions: u64,
     basic_needs: BasicNeeds
 }
-pub fn new_entity(_health: u32, _strengh: u32, _starve: u32, _hydrate: u32, _convident: u32) -> Entity {
+pub fn new_entity(_health: u32, _strengh: u32, _actions: u64, _starve: u32, _hydrate: u32, _convident: u32) -> Entity {
     Entity {
         health: _health,
         strengh: _strengh,
+        actions: _actions,
         basic_needs: BasicNeeds {
             starve: _starve,
             hydrate: _hydrate,
@@ -39,15 +41,19 @@ pub fn new_entity(_health: u32, _strengh: u32, _starve: u32, _hydrate: u32, _con
         }
     }
 }
-pub fn show_entity_status(entity: Entity) {
+pub fn show_entity_status(entity: &Entity) {
     println!("<-=-=-=-=-=-=-=->");
     println!("<Health: {}", entity.health);
     println!("<Strengh: {}", entity.strengh);
+    println!("<Total actions: {}", entity.actions);
     println!("<~~~~~~~~~~~~~~~>");
     println!("<Starvation {}", entity.basic_needs.starve);
     println!("<Hydration {}", entity.basic_needs.hydrate);
     println!("<Convinience {}", entity.basic_needs.convident);
     println!("<-=-=-=-=-=-=-=->");
+}
+pub fn entity_moved(entity: &mut Entity) {
+    entity.actions += 1;
 }
 pub fn dead_entity(entity: Entity) -> bool 
 {

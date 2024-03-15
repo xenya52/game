@@ -7,17 +7,18 @@ use game::{
             move_preditor
         };
 //Testing functions
-use game::{Entity, new_entity, show_entity_status};
+use game::{Entity, new_entity, show_entity_status, entity_moved};
 
 fn main() {
     let mut board = init_board();
-    let mut player: Entity = new_entity(5, 1, 10, 10, 10);
+    let mut player: Entity = new_entity(5, 1, 0, 10, 10, 10);
     let mut usr_input:char = 'x';
     while  !game_over(usr_input, player) {
         print_board(&mut board);
-        show_entity_status(player);
+        show_entity_status(&player);
         usr_input = get_user_input();
         handle_input(usr_input, &mut board);
+        entity_moved(&mut player);
         move_preditor(&mut board);
     }
     println!("Hello, world!");
