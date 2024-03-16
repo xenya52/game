@@ -1,6 +1,7 @@
 use crossterm_input::input;
 use std::char;
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
+
 //Own stuff lib.rs
 use crate::{find_char_in_board, Board};
 
@@ -53,12 +54,16 @@ pub fn show_entity_status(entity: &Entity) {
     println!("<-=-=-=-=-=-=-=->");
 }
 pub fn entity_moved(entity: &mut Entity) {
+    //let value: char = if thread_rng().gen_bool(0.9) { 'x' } else { 'X' };
     entity.actions += 1;
+    entity.basic_needs.starve -= if thread_rng().gen_bool(0.9) { 0 } else { 1 };
+    entity.basic_needs.hydrate -= if thread_rng().gen_bool(0.9) { 0 } else { 2 };
 }
 pub fn dead_entity(entity: Entity) -> bool 
 {
     if entity.health <= 0 ||
-       entity.basic_needs.hydrate <= 0 {
+       entity.basic_needs.hydrate <= 0 ||
+       entity.basic_needs.starve <= 0 {
         true
     }
     else {
