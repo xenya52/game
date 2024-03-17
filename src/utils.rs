@@ -10,9 +10,7 @@ pub fn get_rdm_xy(board: &mut Board) -> Vec<usize> {
     let mut empty_tiles = Vec::new();
     for (i, row) in board.iter().enumerate() {
         for (j, &tile) in row.iter().enumerate() {
-            if tile == '#' {
                 empty_tiles.push((i, j));
-            }
         }
     }
 

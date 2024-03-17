@@ -54,7 +54,6 @@ pub fn show_entity_status(entity: &Entity) {
     println!("<-=-=-=-=-=-=-=->");
 }
 pub fn entity_moved(entity: &mut Entity) {
-    //let value: char = if thread_rng().gen_bool(0.9) { 'x' } else { 'X' };
     entity.actions += 1;
     entity.basic_needs.starve -= if thread_rng().gen_bool(0.9) { 0 } else { 1 };
     entity.basic_needs.hydrate -= if thread_rng().gen_bool(0.9) { 0 } else { 2 };
@@ -75,84 +74,48 @@ pub fn dead_entity(entity: Entity) -> bool
 //////////////////////////////
 fn move_up(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
-        // Make sure we are not on the first row and the coordinates are within the board boundaries
-        if *y > 0 && *y as usize <= board.len() && *x as usize <= board[0].len() {
-            let x_usize = *x as usize;
-            let y_usize = *y as usize;
+        let x_usize = *x as usize;
+        let y_usize = *y as usize;
 
-            // Swap the character with the element above it
-            let temp = board[y_usize - 1][x_usize];
-            board[y_usize - 1][x_usize] = board[y_usize][x_usize];
-            board[y_usize][x_usize] = temp;
-        }
+        // Swap the character with the element above it
+        let temp = board[y_usize - 1][x_usize];
+        board[y_usize - 1][x_usize] = board[y_usize][x_usize];
+        board[y_usize][x_usize] = temp;
     }
 }
 fn move_down(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
-        if *y as usize + 1 < board.len() {
-            let x_usize = *x as usize;
-            let y_usize = *y as usize;
+        let x_usize = *x as usize;
+        let y_usize = *y as usize;
 
-            let temp = board[y_usize + 1][x_usize];
-            board[y_usize + 1][x_usize] = board[y_usize][x_usize];
-            board[y_usize][x_usize] = temp;
-        }
+        let temp = board[y_usize + 1][x_usize];
+        board[y_usize + 1][x_usize] = board[y_usize][x_usize];
+        board[y_usize][x_usize] = temp;
     }
 }
 
 fn move_right(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
-        if *x as usize + 1 < board[0].len() {
-            let x_usize = *x as usize;
-            let y_usize = *y as usize;
+        let x_usize = *x as usize;
+        let y_usize = *y as usize;
 
-            let temp = board[y_usize][x_usize + 1];
-            board[y_usize][x_usize + 1] = board[y_usize][x_usize];
-            board[y_usize][x_usize] = temp;
-        }
+        let temp = board[y_usize][x_usize + 1];
+        board[y_usize][x_usize + 1] = board[y_usize][x_usize];
+        board[y_usize][x_usize] = temp;
     }
 }
 
 fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     if let Some((x, y)) = coordinates.get(0) {
-        if *x > 0 {
-            let x_usize = *x as usize;
-            let y_usize = *y as usize;
+        let x_usize = *x as usize;
+        let y_usize = *y as usize;
 
-            let temp = board[y_usize][x_usize - 1];
-            board[y_usize][x_usize - 1] = board[y_usize][x_usize];
-            board[y_usize][x_usize] = temp;
-        }
+        let temp = board[y_usize][x_usize - 1];
+        board[y_usize][x_usize - 1] = board[y_usize][x_usize];
+        board[y_usize][x_usize] = temp;
     }
 }
-////////////////
-//User actions//
-////////////////
-pub fn handle_input(usr_input: char, board: &mut Board) {
-    let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
-    if alternative_preditor_move(board, usr_input, &coordinates) {
-        match usr_input {
-            'w' => move_up(coordinates ,board),
-            'a' => move_left(coordinates, board),
-            's' => move_down(coordinates, board),
-            'd' => move_right(coordinates, board),
-            _ => println!("Error")
-        }
-    }
-}
-pub fn get_user_input() -> char {
-    let mut input = input();
-    match input.read_char() {
-        Ok(c) => c,
-        Err(e) => {
-            'e'
-        }
-    }   
-}
-////////////////////
-//Preditor actions//
-////////////////////
-fn alternative_preditor_move(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>) -> bool {
+fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let mut x_usize = *x as usize;
@@ -165,7 +128,17 @@ fn alternative_preditor_move(board: &mut Board, usr_input:char, coordinates: &Ve
                 'd' => x_usize += 1,
                 _ => println!("Error")
             }
-
+            if board[y_usize][x_usize] == '~' || board[y_usize][x_usize] == '≈' {
+                entity.basic_needs.hydrate = 10;
+            }
+            if board[y_usize][x_usize] == '+' {
+                entity.basic_needs.starve = 10;
+                board[y_usize][x_usize] = '#';
+                return true;
+            }
+            if board[y_usize][x_usize] == 'ö' {
+                entity.health -= 1;
+            } 
             if board[y_usize][x_usize] == '#' {
                 return true;
             }
@@ -173,7 +146,34 @@ fn alternative_preditor_move(board: &mut Board, usr_input:char, coordinates: &Ve
     }
     return false;
 }
-pub fn move_preditor(board: &mut Board) {
+////////////////
+//User actions//
+////////////////
+pub fn get_user_input() -> char {
+    let mut input = input();
+    match input.read_char() {
+        Ok(c) => c,
+        Err(e) => {
+            'e'
+        }
+    }   
+}
+pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
+    let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
+    if move_possibilites(board, usr_input, &coordinates, entity) {
+        match usr_input {
+            'w' => move_up(coordinates ,board),
+            'a' => move_left(coordinates, board),
+            's' => move_down(coordinates, board),
+            'd' => move_right(coordinates, board),
+            _ => println!("Error")
+        }
+    }
+}
+////////////////////
+//Preditor actions//
+////////////////////
+pub fn move_preditor(board: &mut Board, entity: &mut Entity) {
     let possible_move: bool = rand::thread_rng().gen_bool(0.5);
     println!("{}",possible_move);
     if possible_move
@@ -185,22 +185,22 @@ pub fn move_preditor(board: &mut Board) {
         let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
         let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
         if resultx > 0 {
-            if alternative_preditor_move(board, 'a', &co_preditor) {
+            if move_possibilites(board, 'a', &co_preditor, entity) {
                 move_left(co_preditor, board);
             }
         }
         else if resultx < 0 {
-            if alternative_preditor_move(board, 'd', &co_preditor) {
+            if move_possibilites(board, 'd', &co_preditor, entity) {
                 move_right(co_preditor, board);
             }
         }
         else if resulty < 0 {
-            if alternative_preditor_move(board, 's', &co_preditor) {
+            if move_possibilites(board, 's', &co_preditor, entity) {
                 move_down(co_preditor, board);
             }
         }
         else if resulty > 0 {
-            if alternative_preditor_move(board, 'w', &co_preditor) {
+            if move_possibilites(board, 'w', &co_preditor, entity) {
                 move_up(co_preditor, board);
             }
         }
