@@ -33,3 +33,18 @@ pub fn find_char_in_board(board: &mut Board, given: char) -> Vec<(u32, u32)> {
     }
     coordinates
 }
+
+pub fn is_inside_the_grid(board: &mut Board, coordinates: &Vec<usize>) -> bool {
+    if coordinates.len() != 2 {
+        return false;
+    }
+    let y: usize = coordinates[0];
+    let x: usize = coordinates[1];
+    if y >= board.len()
+    || x >= board[y].len(){
+        false
+    }
+    else {
+        true
+    }
+}
