@@ -4,15 +4,18 @@ use game::{
             print_board, 
             get_user_input, 
             handle_input, 
-            move_preditor
+            move_preditor,
+            EniemyEntity
         };
 //Testing functions
-use game::{Entity, new_entity, show_entity_status, entity_moved};
+use game::{Entity, BasicNeeds, Materials, show_entity_status, entity_moved};
 
 fn main() {
     let mut board = init_board();
-    let mut player: Entity = new_entity(5, 1, 0, 10, 10, 10);
-    let mut test: Entity = new_entity(5, 1, 0, 10, 10, 10);
+    let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
+    let starter_materials: Materials = Materials::new(0, 0);
+    let mut player: Entity = Entity::new(5, 1, 0, starter_needs, starter_materials);
+    let mut test: EniemyEntity = EniemyEntity::new(5, 1);
     let mut usr_input:char = 'x';
     while  !game_over(usr_input, player) {
         print_board(&mut board);

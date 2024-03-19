@@ -17,40 +17,68 @@ pub fn game_over(input: char, player: Entity) -> bool {
     }
     return  false;
 }
-#[derive(Clone, Copy)]
-struct BasicNeeds {
+#[derive(Clone, Copy, Debug)]
+pub struct Materials {
+    wood: u32,
+    stone: u32,
+}
+
+impl Materials {
+    pub fn new(wood: u32, stone: u32) -> Self {
+        Materials { wood, stone }
+    }
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct BasicNeeds {
     starve: u32,
     hydrate: u32,
-    convident: u32
+    confident: u32,
 }
+
+impl BasicNeeds {
+    pub fn new(starve: u32, hydrate: u32, confident: u32) -> Self {
+        BasicNeeds {
+            starve,
+            hydrate,
+            confident,
+        }
+    }
+}
+//////////
+//Entity//
+//////////
 #[derive(Clone, Copy)]
 pub struct Entity {
     health: u32,
-    strengh: u32,
+    strength: u32,
     actions: u64,
-    basic_needs: BasicNeeds
+    basic_needs: BasicNeeds,
+    materials: Materials
 }
-pub fn new_entity(_health: u32, _strengh: u32, _actions: u64, _starve: u32, _hydrate: u32, _convident: u32) -> Entity {
-    Entity {
-        health: _health,
-        strengh: _strengh,
-        actions: _actions,
-        basic_needs: BasicNeeds {
-            starve: _starve,
-            hydrate: _hydrate,
-            convident: _convident
+impl Entity {
+    pub fn new(health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
+        Entity {
+            health,
+            strength,
+            actions,
+            basic_needs,
+            materials,
         }
     }
 }
 pub fn show_entity_status(entity: &Entity) {
     println!("<-=-=-=-=-=-=-=->");
     println!("<Health: {}", entity.health);
-    println!("<Strengh: {}", entity.strengh);
+    println!("<Strengh: {}", entity.strength);
     println!("<Total actions: {}", entity.actions);
     println!("<~~~~~~~~~~~~~~~>");
     println!("<Starvation {}", entity.basic_needs.starve);
     println!("<Hydration {}", entity.basic_needs.hydrate);
-    println!("<Convinience {}", entity.basic_needs.convident);
+    println!("<Convinience {}", entity.basic_needs.confident);
+    println!("<~~~~~~~~~~~~~~~>");
+    println!("<Wood {}", entity.materials.wood);
+    println!("<Stone {}", entity.materials.stone);
     println!("<-=-=-=-=-=-=-=->");
 }
 pub fn entity_moved(entity: &mut Entity) {
@@ -67,6 +95,21 @@ pub fn dead_entity(entity: Entity) -> bool
     }
     else {
         false
+    }
+}
+/////////////////
+//Eniemy entity//
+/////////////////
+pub struct EniemyEntity {
+    health: u32,
+    strength: u32,
+}
+impl EniemyEntity {
+    pub fn new(_health: u32, _strength: u32,) -> Self {
+        EniemyEntity {
+            health: _health,
+            strength: _strength
+        }
     }
 }
 //////////////////////////////
@@ -120,7 +163,8 @@ fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, 
         if *x > 0 {
             let mut x_usize = *x as usize;
             let mut y_usize = *y as usize;
-
+            
+            //Move the block to the given direction
             match usr_input {
                 'w' => y_usize -= 1,
                 'a' => x_usize -= 1,
@@ -128,17 +172,31 @@ fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, 
                 'd' => x_usize += 1,
                 _ => println!("Error")
             }
+            //Action for stone
+            if board[y_usize][x_usize] == 'x' || board[y_usize][x_usize] == 'X' {
+                entity.materials.stone += 1;
+            }
+            //Action for wood
+            if board[y_usize][x_usize] == '|' {
+                entity.materials.wood += 1;
+                board[y_usize][x_usize] = '#';
+                return true;
+            }
+            //Action for water
             if board[y_usize][x_usize] == '~' || board[y_usize][x_usize] == '≈' {
                 entity.basic_needs.hydrate = 10;
             }
+            //Action for food
             if board[y_usize][x_usize] == '+' {
                 entity.basic_needs.starve = 10;
                 board[y_usize][x_usize] = '#';
                 return true;
             }
+            //Action for hitting the eniemy_entity
             if board[y_usize][x_usize] == 'ö' {
                 entity.health -= 1;
             } 
+            //Action for default grass
             if board[y_usize][x_usize] == '#' {
                 return true;
             }
@@ -173,7 +231,7 @@ pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
 ////////////////////
 //Preditor actions//
 ////////////////////
-pub fn move_preditor(board: &mut Board, entity: &mut Entity) {
+pub fn move_preditor(board: &mut Board, entity: &mut EniemyEntity) {
     let possible_move: bool = rand::thread_rng().gen_bool(0.5);
     println!("{}",possible_move);
     if possible_move
