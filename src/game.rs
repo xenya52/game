@@ -1,6 +1,11 @@
-use crossterm_input::input;
+use crossterm::{
+    event::{read, Event, KeyCode},
+    execute,
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+};
 use std::char;
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
+use colorized::Colors;
 
 //Own stuff lib.rs
 use crate::{find_char_in_board, Board};
@@ -73,9 +78,30 @@ pub fn show_entity_status(entity: &Entity) {
     println!("<Strengh: {}", entity.strength);
     println!("<Total actions: {}", entity.actions);
     println!("<~~~~~~~~~~~~~~~>");
+    if entity.basic_needs.starve <= 4 {
+        print!("{}",Colors::BrightRedFg.value());
+    }
+    else if entity.basic_needs.starve <= 8 {
+        print!("{}",Colors::BrightYellowFg.value());
+    }
     println!("<Starvation {}", entity.basic_needs.starve);
+    print!("{}",Colors::Reset.value());
+    if entity.basic_needs.hydrate <= 4 {
+        print!("{}",Colors::BrightRedFg.value());
+    }
+    else if entity.basic_needs.hydrate <= 8 {
+        print!("{}",Colors::BrightYellowFg.value());
+    }
     println!("<Hydration {}", entity.basic_needs.hydrate);
+    print!("{}",Colors::Reset.value());
+    if entity.basic_needs.confident <= 4 {
+        print!("{}",Colors::BrightRedFg.value());
+    }
+    else if entity.basic_needs.confident <= 8 {
+        print!("{}",Colors::BrightYellowFg.value());
+    }
     println!("<Convinience {}", entity.basic_needs.confident);
+    print!("{}",Colors::Reset.value());
     println!("<~~~~~~~~~~~~~~~>");
     println!("<Wood {}", entity.materials.wood);
     println!("<Stone {}", entity.materials.stone);
@@ -208,13 +234,24 @@ fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, 
 //User actions//
 ////////////////
 pub fn get_user_input() -> char {
-    let mut input = input();
-    match input.read_char() {
-        Ok(c) => c,
-        Err(e) => {
-            'e'
+    enable_raw_mode().expect("Failed to enable raw mode");
+
+    let mut input_char = ' ';
+    loop {
+        if let Event::Key(key_event) = read().expect("Failed to read event") {
+            match key_event.code {
+                KeyCode::Char(c) => {
+                    input_char = c;
+                    break;
+                }
+                _ => continue,
+            }
         }
-    }   
+    }
+
+    // Deaktiviere den Raw-Modus, bevor das Programm endet
+    disable_raw_mode().expect("Failed to disable raw mode");
+    input_char
 }
 pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
     let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
@@ -232,35 +269,35 @@ pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
 //Preditor actions//
 ////////////////////
 pub fn move_preditor(board: &mut Board, entity: &mut EniemyEntity) {
-    let possible_move: bool = rand::thread_rng().gen_bool(0.5);
-    println!("{}",possible_move);
-    if possible_move
-     {
-        let co_preditor: Vec<(u32,u32)> = find_char_in_board(board, 'ö');
-        let co_player: Vec<(u32,u32)> = find_char_in_board(board, '@');
-        // Assuming both vectors are guaranteed to have at least one element.
-        // You should add checks to ensure they are not empty to avoid runtime panics.
-        let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
-        let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
-        if resultx > 0 {
-            if move_possibilites(board, 'a', &co_preditor, entity) {
-                move_left(co_preditor, board);
-            }
-        }
-        else if resultx < 0 {
-            if move_possibilites(board, 'd', &co_preditor, entity) {
-                move_right(co_preditor, board);
-            }
-        }
-        else if resulty < 0 {
-            if move_possibilites(board, 's', &co_preditor, entity) {
-                move_down(co_preditor, board);
-            }
-        }
-        else if resulty > 0 {
-            if move_possibilites(board, 'w', &co_preditor, entity) {
-                move_up(co_preditor, board);
-            }
-        }
-     }
+    // let possible_move: bool = rand::thread_rng().gen_bool(0.5);
+    // println!("{}",possible_move);
+    // if possible_move
+    //  {
+    //     let co_preditor: Vec<(u32,u32)> = find_char_in_board(board, 'ö');
+    //     let co_player: Vec<(u32,u32)> = find_char_in_board(board, '@');
+    //     // Assuming both vectors are guaranteed to have at least one element.
+    //     // You should add checks to ensure they are not empty to avoid runtime panics.
+    //     let resultx: i32 = co_preditor[0].0 as i32 - co_player[0].0 as i32; // Subtract x coordinates
+    //     let resulty: i32 = co_preditor[0].1 as i32 - co_player[0].1 as i32; // Subtract y coordinates
+    //     if resultx > 0 {
+    //         if move_possibilites(board, 'a', &co_preditor, entity) {
+    //             move_left(co_preditor, board);
+    //         }
+    //     }
+    //     else if resultx < 0 {
+    //         if move_possibilites(board, 'd', &co_preditor, entity) {
+    //             move_right(co_preditor, board);
+    //         }
+    //     }
+    //     else if resulty < 0 {
+    //         if move_possibilites(board, 's', &co_preditor, entity) {
+    //             move_down(co_preditor, board);
+    //         }
+    //     }
+    //     else if resulty > 0 {
+    //         if move_possibilites(board, 'w', &co_preditor, entity) {
+    //             move_up(co_preditor, board);
+    //         }
+    //     }
+    //  }
 }

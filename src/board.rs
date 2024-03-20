@@ -9,6 +9,22 @@ use crate::{get_rdm_xy, is_inside_the_grid};
 //Board//
 /////////
 pub type Board = Vec<Vec<char>>;
+fn set_frame_in_board(board: &mut Board) {
+    let row_count = board.len();
+    let col_count = board.first().unwrap().len();
+
+    //first and last rows
+    for j in 0..col_count {
+        board[0][j] = '/'; // first row
+        board[row_count - 1][j] = '/'; // last row
+    }
+
+    //columns for rows in between
+    for i in 1..(row_count - 1) {
+        board[i][0] = '/'; // first colum
+        board[i][col_count - 1] = '/'; // last column
+    }
+}
 
 ////////////////////
 //World generation//
@@ -109,6 +125,10 @@ pub fn init_board() -> Board {
     //Set player in board
     print!("Set player in board ... ");
     set_player_in_board(&mut board);
+    println!("Done!");
+    //Set frame
+    print!("Set frame ... ");
+    set_frame_in_board(&mut board);
     println!("Done!");
     return board;
 }
