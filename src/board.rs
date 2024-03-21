@@ -132,10 +132,45 @@ pub fn init_board() -> Board {
     println!("Done!");
     return board;
 }
+pub fn gen_cave_board() -> Board {
+    let mut board = vec![vec!['#';32];16];
+    let mut count = 0;
+    //Generate barriers
+    print!("Generate rock ... ");
+    loop {
+        count += 1;
+        add_random_mountain(&mut board);
+        if count == 10 {
+            break;
+        }
+    }
+    count = 0;
+    println!("Done!");
+    //Generate water
+    print!("Generate water ... ");
+    loop {
+        count += 1;
+        add_radom_water(&mut board);
+        if count == 3 {
+            break;
+        }
+    }
+    count = 0;
+    println!("Done!");
+    //Set player in cave
+    print!("Set player in board ... ");
+    set_player_in_board(&mut board);
+    println!("Done!");
+    //Set frame
+    print!("Set frame ... ");
+    set_frame_in_board(&mut board);
+    println!("Done!");
+    return board;
+}
 ////////////////
 //Show a board//
 ////////////////
-pub fn print_board(board: &mut Board) {
+pub fn print_overworld(board: &mut Board) {
     for (i, row) in board.iter().enumerate() {
         for (j,row) in row.iter().enumerate() {
             if row == &'@' {
@@ -155,6 +190,33 @@ pub fn print_board(board: &mut Board) {
             }
             else {
                 print!("{}",Colors::GreenFg.value());
+            }
+            print!("{}", row);
+            print!("{}",Colors::Reset.value());
+        }
+        println!();
+    }
+}
+pub fn print_cave(board: &mut Board) {
+    for (i, row) in board.iter().enumerate() {
+        for (j,row) in row.iter().enumerate() {
+            if row == &'@' {
+                print!("{}",Colors::BrightYellowFg.value());
+            }
+            else if row == &'ö' {
+                print!("{}",Colors::WhiteFg.value())
+            }
+            else if row == &'x' || row == &'X' {
+                print!("{}",Colors::BrightWhiteFg.value());
+            }
+            else if row == &'~' {
+                print!("{}", Colors::BrightBlueFg.value());
+            }
+            else if row == &'+' || row == &'|' {
+                print!("{}", Colors::RedFg.value());
+            }
+            else {
+                print!("{}",Colors::BrightBlackFg.value());
             }
             print!("{}", row);
             print!("{}",Colors::Reset.value());

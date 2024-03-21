@@ -1,7 +1,7 @@
 use game::{
             init_board, 
             game_over, 
-            print_board, 
+            print_overworld, 
             get_user_input, 
             handle_input, 
             move_preditor,
@@ -18,7 +18,7 @@ fn main() {
     let mut test: EniemyEntity = EniemyEntity::new(5, 1);
     let mut usr_input:char = 'x';
     while  !game_over(usr_input, player) {
-        print_board(&mut board);
+        print_overworld(&mut board);
         show_entity_status(&player);
         usr_input = get_user_input();
         handle_input(usr_input, &mut board, &mut player);
