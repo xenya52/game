@@ -1,14 +1,13 @@
 use crossterm::{
     event::{read, Event, KeyCode},
-    execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    terminal::{disable_raw_mode, enable_raw_mode}
 };
 use std::char;
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
 use colorized::Colors;
 
 //Own stuff lib.rs
-use crate::{find_char_in_board, Board};
+use crate::{board::{self, init_cave}, find_char_in_board, Board};
 
 //////////////////////
 //General game logic//
@@ -126,13 +125,13 @@ pub fn dead_entity(entity: Entity) -> bool
 /////////////////
 //Eniemy entity//
 /////////////////
-pub struct EniemyEntity {
+pub struct Eniemy {
     health: u32,
     strength: u32,
 }
-impl EniemyEntity {
+impl Eniemy {
     pub fn new(_health: u32, _strength: u32,) -> Self {
-        EniemyEntity {
+        Eniemy {
             health: _health,
             strength: _strength
         }
@@ -185,12 +184,12 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     }
 }
 fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
+    
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let mut x_usize = *x as usize;
             let mut y_usize = *y as usize;
             
-            //Move the block to the given direction
             match usr_input {
                 'w' => y_usize -= 1,
                 'a' => x_usize -= 1,
@@ -221,7 +220,10 @@ fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, 
             //Action for hitting the eniemy_entity
             if board[y_usize][x_usize] == 'ö' {
                 entity.health -= 1;
-            } 
+            }
+            if board[y_usize][x_usize] == 'o' {
+                init_cave();
+            }
             //Action for default grass
             if board[y_usize][x_usize] == '#' {
                 return true;
@@ -268,7 +270,7 @@ pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
 ////////////////////
 //Preditor actions//
 ////////////////////
-pub fn move_preditor(board: &mut Board, entity: &mut EniemyEntity) {
+pub fn move_preditor(board: &mut Board, entity: &mut Eniemy) {
     // let possible_move: bool = rand::thread_rng().gen_bool(0.5);
     // println!("{}",possible_move);
     // if possible_move
