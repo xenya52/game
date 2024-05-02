@@ -223,3 +223,7 @@ pub fn print_cave(board: &mut Board) {
         println!();
     }
 }
+
+pub fn is_on_overworld() -> bool {
+    return true
+}
