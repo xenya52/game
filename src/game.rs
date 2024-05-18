@@ -7,7 +7,7 @@ pub use rand::{thread_rng, Rng, seq::SliceRandom};
 use colorized::Colors;
 
 //Own stuff lib.rs
-use crate::{board::{self, init_cave}, find_char_in_board, Board};
+use crate::{board::{self, init_cave}, find_char_in_board, Board, World};
 
 //////////////////////
 //General game logic//
@@ -184,7 +184,6 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
     }
 }
 fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
-    
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let mut x_usize = *x as usize;

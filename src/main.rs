@@ -1,5 +1,5 @@
 use game::{
-            init_board, 
+            init_overworld, 
             game_over, 
             print_overworld, 
             get_user_input, 
@@ -11,11 +11,15 @@ use game::{
             Materials,  
             show_entity_status,
             entity_moved,
-            is_on_overworld
+            is_on_overworld,
+            World,
+            init_cave
         };
 
 fn main() {
-    let mut board = init_board();
+    let mut overworld = init_overworld();
+    let mut cave = init_cave();
+    let mut world: World = World::new(overworld, cave);
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     let starter_materials: Materials = Materials::new(0, 0);
     let mut player: Entity = Entity::new(5, 1, 0, starter_needs, starter_materials);
@@ -24,13 +28,13 @@ fn main() {
     let mut usr_input:char = 'x';
 
     while  !game_over(usr_input, player) {
-        if(is_on_overworld()) {
-            print_overworld(&mut board);
+        if world.is_on_overworld {
+            print_overworld(&mut world.overworld);
             show_entity_status(&player);
             usr_input = get_user_input();
-            handle_input(usr_input, &mut board, &mut player);
+            handle_input(usr_input, &mut world.overworld, &mut player);
             entity_moved(&mut player);
-            move_preditor(&mut board, &mut eniemy);
+            move_preditor(&mut world.overworld, &mut eniemy);
         }
         else {
             println!("Underworld")

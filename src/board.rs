@@ -1,3 +1,5 @@
+use std::ptr::null;
+
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
 pub use colorized::*;
 //Own stuff lib.rs
@@ -7,6 +9,21 @@ use crate::{get_rdm_xy, is_inside_the_grid};
 //Board//
 /////////
 pub type Board = Vec<Vec<char>>;
+pub struct World {
+    pub overworld: Board,
+    pub cave: Board,
+    pub is_on_overworld: bool
+}
+impl World {
+    pub fn new(_overworld: Board, _cave: Board) -> Self {
+        World {
+            overworld: _overworld,
+            cave: _cave,
+            is_on_overworld: true
+        }
+    }
+}
+
 fn set_frame_in_board(board: &mut Board) {
     let row_count = board.len();
     let col_count = board.first().unwrap().len();
@@ -85,7 +102,7 @@ fn place_eniemy(board: &mut Board) {
     let c:Vec<usize> = get_rdm_xy(board);
     board[c[0]][c[1]] = 'ö';
 }
-pub fn init_board() -> Board {
+pub fn init_overworld() -> Board {
     let mut board = vec![vec!['#';32];16];
     let mut count = 0;
     //Generate barriers
