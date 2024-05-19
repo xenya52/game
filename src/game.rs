@@ -7,7 +7,7 @@ pub use rand::{thread_rng, Rng, seq::SliceRandom};
 use colorized::Colors;
 
 //Own stuff lib.rs
-use crate::{board::{self, init_cave}, find_char_in_board, Board, World};
+use crate::{board::{self, init_cave}, change_world_state, find_char_in_board, Board, World};
 
 //////////////////////
 //General game logic//
@@ -183,7 +183,14 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
         board[y_usize][x_usize] = temp;
     }
 }
-fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
+fn move_possibilites(world:&mut World, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
+    let mut board: Board = world.overworld;
+    if world.is_on_overworld {
+        board = world.overworld
+    }
+    else {
+        board = world.cave
+    }
     if let Some((x, y)) = coordinates.get(0) {
         if *x > 0 {
             let mut x_usize = *x as usize;
@@ -221,7 +228,8 @@ fn move_possibilites(board: &mut Board, usr_input:char, coordinates: &Vec<(u32, 
                 entity.health -= 1;
             }
             if board[y_usize][x_usize] == 'o' {
-                init_cave();
+                change_world_state(world);
+                return true;
             }
             //Action for default grass
             if board[y_usize][x_usize] == '#' {
@@ -254,9 +262,16 @@ pub fn get_user_input() -> char {
     disable_raw_mode().expect("Failed to disable raw mode");
     input_char
 }
-pub fn handle_input(usr_input: char, board: &mut Board, entity: &mut Entity) {
+pub fn handle_input(usr_input: char, world: &mut World, entity: &mut Entity) {
+    let board: &mut Board;
+    if world.is_on_overworld {
+        board = &mut world.overworld;
+    }
+    else {
+        board = &mut world.cave
+    }
     let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
-    if move_possibilites(board, usr_input, &coordinates, entity) {
+    if move_possibilites(World::copy(world), usr_input, &coordinates, entity) {
         match usr_input {
             'w' => move_up(coordinates ,board),
             'a' => move_left(coordinates, board),

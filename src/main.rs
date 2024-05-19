@@ -1,19 +1,5 @@
 use game::{
-            init_overworld, 
-            game_over, 
-            print_overworld, 
-            get_user_input, 
-            handle_input, 
-            move_preditor,
-            Eniemy,
-            Entity, 
-            BasicNeeds,
-            Materials,  
-            show_entity_status,
-            entity_moved,
-            is_on_overworld,
-            World,
-            init_cave
+            entity_moved, game_over, get_user_input, handle_input, init_cave, init_overworld, change_world_state, move_preditor, print_cave, print_overworld, show_entity_status, BasicNeeds, Eniemy, Entity, Materials, World
         };
 
 fn main() {
@@ -32,12 +18,16 @@ fn main() {
             print_overworld(&mut world.overworld);
             show_entity_status(&player);
             usr_input = get_user_input();
-            handle_input(usr_input, &mut world.overworld, &mut player);
+            handle_input(usr_input, &mut world, &mut player);
             entity_moved(&mut player);
             move_preditor(&mut world.overworld, &mut eniemy);
         }
         else {
-            println!("Underworld")
+            print_cave(&mut world.cave);
+            usr_input = get_user_input();
+            handle_input(usr_input, &mut world, &mut player);
+            entity_moved(&mut player);
+            move_preditor(&mut world.cave, &mut eniemy);
         }
     }
     println!("Hello, world!");

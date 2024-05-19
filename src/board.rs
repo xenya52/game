@@ -1,10 +1,6 @@
-use std::ptr::null;
-
 pub use rand::{thread_rng, Rng, seq::SliceRandom};
 pub use colorized::*;
-//Own stuff lib.rs
 use crate::{get_rdm_xy, is_inside_the_grid};
-
 /////////
 //Board//
 /////////
@@ -21,6 +17,9 @@ impl World {
             cave: _cave,
             is_on_overworld: true
         }
+    }
+    pub fn copy(world: World) -> Self {
+        return world;
     }
 }
 
@@ -241,6 +240,12 @@ pub fn print_cave(board: &mut Board) {
     }
 }
 
-pub fn is_on_overworld() -> bool {
-    return true
+pub fn change_world_state(world: &mut World) {
+    if world.is_on_overworld {
+        world.is_on_overworld = false;
+        world.cave = init_cave();
+    }
+    else {
+        world.is_on_overworld = true;
+    }
 }
