@@ -6,20 +6,17 @@ use crate::{get_rdm_xy, is_inside_the_grid};
 /////////
 pub type Board = Vec<Vec<char>>;
 pub struct World {
-    pub overworld: Board,
-    pub cave: Board,
+    pub overworld: Vec<Vec<char>>,
+    pub cave: Vec<Vec<char>>,
     pub is_on_overworld: bool
 }
 impl World {
-    pub fn new(_overworld: Board, _cave: Board) -> Self {
+    pub fn new(_overworld: Vec<Vec<char>>, _cave: Vec<Vec<char>>) -> Self {
         World {
             overworld: _overworld,
             cave: _cave,
             is_on_overworld: true
         }
-    }
-    pub fn copy(world: World) -> Self {
-        return world;
     }
 }
 

@@ -183,7 +183,7 @@ fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
         board[y_usize][x_usize] = temp;
     }
 }
-fn move_possibilites(world:&mut World, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
+fn move_possibilites(world: &mut World, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
     let mut board: Board = world.overworld;
     if world.is_on_overworld {
         board = world.overworld
@@ -271,7 +271,8 @@ pub fn handle_input(usr_input: char, world: &mut World, entity: &mut Entity) {
         board = &mut world.cave
     }
     let coordinates: Vec<(u32, u32)> = find_char_in_board(board, '@');
-    if move_possibilites(World::copy(world), usr_input, &coordinates, entity) {
+    // if move_possibilites(&mut World::clone(&world), usr_input, &coordinates, entity) {
+    if true {    
         match usr_input {
             'w' => move_up(coordinates ,board),
             'a' => move_left(coordinates, board),
