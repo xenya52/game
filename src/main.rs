@@ -1,7 +1,3 @@
-use game::{
-            entity_moved, game_over, get_user_input, handle_input, init_cave, init_overworld, change_world_state, move_preditor, print_cave, print_overworld, show_entity_status, BasicNeeds, Eniemy, Entity, Materials, World
-        };
-
 fn main() {
     let mut overworld = init_overworld();
     let mut cave = init_cave();
