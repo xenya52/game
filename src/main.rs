@@ -1,3 +1,5 @@
+mod world;
+use world::{init_cave, init_overworld}
 fn main() {
     let mut overworld = init_overworld();
     let mut cave = init_cave();

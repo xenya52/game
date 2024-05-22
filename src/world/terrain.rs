@@ -1,87 +1,74 @@
-pub fn init_overworld() -> Board {
-  let mut board = vec![vec!['#';32];16];
-  let mut count = 0;
-  //Generate barriers
-  print!("Generate mountians ... ");
-  loop {
-      count += 1;
-      add_random_mountain(&mut board);
-      if count == 10 {
-          break;
-      }
+mod utils;
+use crate::world::{Board, World};
+
+pub fn set_frame_in_board(board: &mut Board) {
+  let row_count = board.len();
+  let col_count = board.first().unwrap().len();
+
+  //first and last rows
+  for j in 0..col_count {
+      board[0][j] = '/'; // first row
+      board[row_count - 1][j] = '/'; // last row
   }
-  count = 0;
-  println!("Done!");
-  //Generate water
-  print!("Generate water ... ");
-  loop {
-      count += 1;
-      add_radom_water(&mut board);
-      if count == 3 {
-          break;
-      }
+
+  //columns for rows in between
+  for i in 1..(row_count - 1) {
+      board[i][0] = '/'; // first colum
+      board[i][col_count - 1] = '/'; // last column
   }
-  count = 0;
-  println!("Done!");
-  //Generate food
-  print!("Generate food ... ");
-  loop {
-      count += 1;
-      add_radom_food(&mut board);
-      if count == 4 {
-          break;
-      }
-  }
-  println!("Done!");
-  //Generate cave entrance
-  print!("Generate cave entrance ...");
-  add_cave(&mut board);
-  println!("Done!");
-  //Set preditor in board
-  print!("Set preditor in board ... ");
-  place_eniemy(&mut board);
-  println!("Done!");
-  //Set player in board
-  print!("Set player in board ... ");
-  place_player(&mut board);
-  println!("Done!");
-  //Set frame
-  print!("Set frame ... ");
-  set_frame_in_board(&mut board);
-  println!("Done!");
-  return board;
 }
-pub fn init_cave() -> Board {
-  let mut board = vec![vec!['#';32];16];
-  let mut count = 0;
-  //Generate barriers
-  print!("Generate rock ... ");
-  loop {
-      count += 1;
-      add_random_mountain(&mut board);
-      if count == 10 {
-          break;
+
+////////////////////
+//World generation//
+////////////////////
+pub fn add_random_mountain(board: &mut Board) -> bool {
+  let c = get_rdm_xy(board);
+  let c_space = vec![c[0] + 2, c[1] + 2];
+
+  if is_inside_the_grid(board, &c) 
+  && is_inside_the_grid(board, &c_space) {
+      for i in 0..3 { // Iteriert über Zeilen
+          for j in 0..3 { // Iteriert über Spalten
+              let value = if thread_rng().gen_bool(0.5) { 'x' } else { 'X' };
+              board[c[0] + i][c[1] + j] = value;
+          }
+      }
+      true
+  } else {
+      false
+  }
+}
+pub fn add_radom_water(board: &mut Board) {
+  let c:Vec<usize> = get_rdm_xy(board);
+  let c_space: Vec<usize> = vec![c[0] + 1, c[1] + 1];
+  if is_inside_the_grid(board, &c) 
+  && is_inside_the_grid(board, &c_space) {
+      for i in 0..2 {
+          for j in 0..2 {
+              let value = '~';
+              board[c[0] + i][c[1] + j] = value;
+          }
       }
   }
-  count = 0;
-  println!("Done!");
-  //Generate water
-  print!("Generate water ... ");
-  loop {
-      count += 1;
-      add_radom_water(&mut board);
-      if count == 3 {
-          break;
+}
+pub fn add_radom_food(board: &mut Board) {
+  let c:Vec<usize> = get_rdm_xy(board);
+  let c_space:Vec<usize> = vec![c[0] + 3, c[1] + 3];
+  let food: char = '+';
+  let wood: char = '|';
+  if is_inside_the_grid(board, &c)
+  && is_inside_the_grid(board, &c_space) {
+          board[c[0] + 2][c[1]] = food;
+          board[c[0] + 2][c[1] + 1] = food;
+          board[c[0] + 2][c[1] + 2] = food;
+          board[c[0] + 2][c[1] + 3] = food;
+          board[c[0] + 1][c[1] + 1] = food;
+          board[c[0] + 1][c[1] + 2] = food;
+          board[c[0] + 3][c[1] + 1] = wood;
+          board[c[0] + 3][c[1] + 2] = wood;
       }
   }
-  println!("Done!");
-  //Set player in cave
-  print!("Set player in board ... ");
-  place_player(&mut board);
-  println!("Done!");
-  //Set frame
-  print!("Set frame ... ");
-  set_frame_in_board(&mut board);
-  println!("Done!");
-  return board;
+pub fn add_cave(board: &mut Board) {
+  let c:Vec<usize> = get_rdm_xy(board);
+  board[c[0]][c[1]] = 'o';
 }

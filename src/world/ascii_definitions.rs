@@ -1,4 +1,6 @@
-pub fn ascii_definitions() {
+use super::world::Board;
+
+pub fn ascii_definitions(board: Board) {
   //Action for stone
   if board[y_usize][x_usize] == 'x' || board[y_usize][x_usize] == 'X' {
     entity.materials.stone += 1;

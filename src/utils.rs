@@ -1,7 +1,4 @@
-
 use rand::{thread_rng, Rng, seq::SliceRandom};
-//Own stuff lib.rs
-use crate::Board;
 
 //////////////////////////
 //Get or set coordinates//
