@@ -1,3 +1,4 @@
+use crate::world::{World, init_cave};
 pub enum WORLD_STATE {
   is_on_overworld,
   is_in_cave,

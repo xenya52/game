@@ -1,5 +1,8 @@
-mod utils;
-use crate::world::{Board, World};
+use crate::{utils::{get_rdm_xy, is_inside_the_grid}, world::{Board, World}};
+//////////////////////
+///External imports///
+//////////////////////
+use rand::{thread_rng, Rng, seq::SliceRandom};
 
 pub fn set_frame_in_board(board: &mut Board) {
   let row_count = board.len();
