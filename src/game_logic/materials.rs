@@ -1,7 +1,7 @@
 #[derive(Clone, Copy, Debug)]
 pub struct Materials {
-    wood: u32,
-    stone: u32,
+    pub wood: u32,
+    pub stone: u32,
 }
 
 impl Materials {

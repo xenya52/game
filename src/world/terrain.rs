@@ -1,4 +1,6 @@
-use crate::{utils::{get_rdm_xy, is_inside_the_grid}, world::{Board, World}};
+use crate::{
+  utils::{get_rdm_xy, is_inside_the_grid}, 
+  world::{Board, World}};
 //////////////////////
 ///External imports///
 //////////////////////

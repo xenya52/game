@@ -1,7 +1,8 @@
+use crate::world::{Board, World, ascii_definitions};
+use crate::game_logic::Entity;
 //////////////////////
 ///External imports///
 //////////////////////
-pub use rand::{thread_rng, Rng, seq::SliceRandom};
 use crossterm::{
   event::{read, Event, KeyCode},
   terminal::{disable_raw_mode, enable_raw_mode}
@@ -10,51 +11,58 @@ use crossterm::{
 //////////////////////////////
 //General movement functions//
 //////////////////////////////
-fn move_up(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
-  if let Some((x, y)) = coordinates.get(0) {
-      let x_usize = *x as usize;
-      let y_usize = *y as usize;
-
-      // Swap the character with the element above it
-      let temp = board[y_usize - 1][x_usize];
-      board[y_usize - 1][x_usize] = board[y_usize][x_usize];
-      board[y_usize][x_usize] = temp;
+pub fn move_up(x: usize, y: usize, world: &mut World) {
+  let mut board: Board;
+  if world.is_on_overworld {
+    board = world.overworld;
   }
+  else {
+    board = world.cave
+  }
+  let temp = board[y - 1][x];
+  board[y - 1][x] = board[y][x];
+  board[y][x] = temp;
 }
-fn move_down(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
-  if let Some((x, y)) = coordinates.get(0) {
-      let x_usize = *x as usize;
-      let y_usize = *y as usize;
-
-      let temp = board[y_usize + 1][x_usize];
-      board[y_usize + 1][x_usize] = board[y_usize][x_usize];
-      board[y_usize][x_usize] = temp;
+pub fn move_down(x: usize, y: usize, world: &mut World) {
+  let mut board: Board;
+  if world.is_on_overworld {
+    board = world.overworld;
   }
-}
-
-fn move_right(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
-  if let Some((x, y)) = coordinates.get(0) {
-      let x_usize = *x as usize;
-      let y_usize = *y as usize;
-
-      let temp = board[y_usize][x_usize + 1];
-      board[y_usize][x_usize + 1] = board[y_usize][x_usize];
-      board[y_usize][x_usize] = temp;
+  else {
+    board = world.cave
   }
+  let temp = board[y + 1][x];
+  board[y + 1][x] = board[y][x];
+  board[y][x] = temp;
 }
 
-fn move_left(coordinates: Vec<(u32, u32)>, board: &mut Vec<Vec<char>>) {
-  if let Some((x, y)) = coordinates.get(0) {
-      let x_usize = *x as usize;
-      let y_usize = *y as usize;
-
-      let temp = board[y_usize][x_usize - 1];
-      board[y_usize][x_usize - 1] = board[y_usize][x_usize];
-      board[y_usize][x_usize] = temp;
+pub fn move_right(x: usize, y: usize, world: &mut World) {
+  let mut board: Board;
+  if world.is_on_overworld {
+    board = world.overworld;
   }
+  else {
+    board = world.cave
+  }
+  let temp = board[y][x + 1];
+  board[y][x + 1] = board[y][x];
+  board[y][x] = temp;
 }
 
-fn movement_actions(world: &mut World, usr_input:char, coordinates: &Vec<(u32, u32)>, entity: &mut Entity) -> bool {
+pub fn move_left(x: usize, y: usize, world: &mut World) {
+  let mut board: Board;
+  if world.is_on_overworld {
+    board = world.overworld;
+  }
+  else {
+    board = world.cave
+  }
+  let temp = board[y][x - 1];
+  board[y][x - 1] = board[y][x];
+  board[y][x] = temp;
+}
+
+pub fn movement_actions(world: &mut World, usr_input:char, mut x: usize, mut y: usize, entity: &mut Entity) -> bool {
   let mut board: Board = world.overworld;
   if world.is_on_overworld {
       board = world.overworld
@@ -62,20 +70,12 @@ fn movement_actions(world: &mut World, usr_input:char, coordinates: &Vec<(u32, u
   else {
       board = world.cave
   }
-  if let Some((x, y)) = coordinates.get(0) {
-      if *x > 0 {
-          let mut x_usize = *x as usize;
-          let mut y_usize = *y as usize;
-          
-          match usr_input {
-              'w' => y_usize -= 1,
-              'a' => x_usize -= 1,
-              's' => y_usize += 1,
-              'd' => x_usize += 1,
-              _ => println!("Error")
-          }
-          
-      }
+  match usr_input {
+      'w' => y -= 1,
+      'a' => x -= 1,
+      's' => y += 1,
+      'd' => x += 1,
+      _ => println!("Error")
   }
-  return false;
+  return ascii_definitions(world,x,y,entity);
 }

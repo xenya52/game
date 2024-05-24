@@ -1,3 +1,4 @@
+use crate::game_logic::{Entity, dead_entity};
 //////////////////////
 //General game logic//
 //////////////////////

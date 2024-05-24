@@ -1,36 +1,38 @@
-use crate::world::{Board};
+use crate::world::{Board, World, change_world_state};
+use crate::game_logic::{Entity};
 
-pub fn ascii_definitions(board: Board, x:usize, y:usize, entity: Entity) {
+pub fn ascii_definitions(world: &mut World, x:usize, y:usize, entity: &mut Entity) -> bool {
   //Action for stone
-  if board[y][x] == 'x' || board[y][x] == 'X' {
+  if world.overworld[y][x] == 'x' || world.overworld[y][x] == 'X' {
     entity.materials.stone += 1;
   }
   //Action for wood
-  if board[y][x] == '|' {
+  if world.overworld[y][x] == '|' {
       entity.materials.wood += 1;
-      board[y][x] = '#';
+      world.overworld[y][x] = '#';
       return true;
   }
   //Action for water
-  if board[y][x] == '~' || board[y][x] == '≈' {
+  if world.overworld[y][x] == '~' || world.overworld[y][x] == '≈' {
       entity.basic_needs.hydrate = 10;
   }
   //Action for food
-  if board[y][x] == '+' {
+  if world.overworld[y][x] == '+' {
       entity.basic_needs.starve = 10;
-      board[y][x] = '#';
+      world.overworld[y][x] = '#';
       return true;
   }
   //Action for hitting the eniemy_entity
-  if board[y][x] == 'ö' {
+  if world.overworld[y][x] == 'ö' {
       entity.health -= 1;
   }
-  if board[y][x] == 'o' {
+  if world.overworld[y][x] == 'o' {
       change_world_state(world);
       return true;
   }
   //Action for default grass
-  if board[y][x] == '#' {
+  if world.overworld[y][x] == '#' {
       return true;
   }
+  return false;
 }

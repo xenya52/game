@@ -1,7 +1,8 @@
-fn place_player(board: &mut Board) {
-  board[8][8] = '@';
-}
-fn place_eniemy(board: &mut Board) {
-  let c:Vec<usize> = get_rdm_xy(board);
-  board[c[0]][c[1]] = 'ö';
+use crate::{
+  world::Board, 
+  utils::get_rdm_xy};
+
+pub fn place_minion(board: &mut Board) {
+  let xy:Vec<usize> = get_rdm_xy(board);
+  board[xy[0]][xy[1]] = '@';
 }

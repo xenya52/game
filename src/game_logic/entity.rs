@@ -1,8 +1,17 @@
+use crate::game_logic::{Materials};
+//////////////////////
+///External imports///
+//////////////////////
+use colorized::*;
+use rand::{thread_rng, Rng, seq::SliceRandom};
+
+
+
 #[derive(Clone, Copy, Debug)]
 pub struct BasicNeeds {
-    starve: u32,
-    hydrate: u32,
-    confident: u32,
+    pub starve: u32,
+    pub hydrate: u32,
+    pub confident: u32,
 }
 
 impl BasicNeeds {
@@ -19,11 +28,11 @@ impl BasicNeeds {
 //////////
 #[derive(Clone, Copy)]
 pub struct Entity {
-    health: u32,
-    strength: u32,
-    actions: u64,
-    basic_needs: BasicNeeds,
-    materials: Materials
+    pub health: u32,
+    pub strength: u32,
+    pub actions: u64,
+    pub basic_needs: BasicNeeds,
+    pub materials: Materials
 }
 impl Entity {
     pub fn new(health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
