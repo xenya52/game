@@ -8,3 +8,4 @@ pub use display::{print_overworld, print_cave};
 pub use entity::{Entity, BasicNeeds, dead_entity, show_entity_status, entity_moved};
 pub use genral_game_logic::game_over;
 pub use materials::{Materials};
+pub use spawns::place_minion;

@@ -32,10 +32,10 @@ pub fn get_user_input() -> char {
 pub fn handle_input(usr_input: char, world: &mut World, entity: &mut Entity) {
   let mut xy: Vec<usize>;
   if world.is_on_overworld {
-    xy = find_char_in_board(world.overworld, '@');
+    xy = find_char_in_board(&world.overworld, '@');
   }
   else {
-    xy = find_char_in_board(world.cave, '@');
+    xy = find_char_in_board(&world.cave, '@');
   }
   let mut x: usize = xy[0];
   let mut y: usize = xy[1];

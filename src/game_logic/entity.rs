@@ -28,6 +28,7 @@ impl BasicNeeds {
 //////////
 #[derive(Clone, Copy)]
 pub struct Entity {
+    // pub name: str, TODO
     pub health: u32,
     pub strength: u32,
     pub actions: u64,
@@ -37,6 +38,7 @@ pub struct Entity {
 impl Entity {
     pub fn new(health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
         Entity {
+            // name : "test", //TODO
             health,
             strength,
             actions,

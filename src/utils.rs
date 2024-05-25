@@ -23,7 +23,7 @@ pub fn get_rdm_xy(board: &mut Board) -> Vec<usize> {
     }
 }
 
-pub fn find_char_in_board(board: Board, given: char) -> Vec<usize> {
+pub fn find_char_in_board(board: &Board, given: char) -> Vec<usize> {
     let mut coordinates = Vec::new();
     for (y, row) in board.iter().enumerate() {
         for (x, &char) in row.iter().enumerate() {
