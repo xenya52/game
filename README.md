@@ -1,6 +1,6 @@
 # TODOS
-- implement span cave exit for caves
 - implement names for minions
-- implement different game over screens with ascii art
 - implement real blocks as srucks
+- Make a "overworld size class and extend the overwold after a specific amount of turns"
+- implement buildable structures
 - Write a good md

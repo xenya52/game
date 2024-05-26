@@ -1,7 +1,7 @@
 use crate::world::{
     Board,
     add_radom_food, add_radom_water, add_random_mountain, 
-    add_cave, set_frame_in_board};
+    add_cave, set_frame_in_board, add_cave_exit};
 use crate::game_logic::place_minion;
 
 pub fn init_overworld() -> Board {
@@ -43,10 +43,6 @@ pub fn init_overworld() -> Board {
   print!("Generate cave entrance ...");
   add_cave(&mut board);
   println!("Done!");
-  //Set preditor in board
-  print!("Set preditor in board ... ");
-  //place_eniemy(&mut board); TODO
-  println!("Done!");
   //Set player in board
   print!("Set one minion (Debug) in board ... ");
   place_minion(&mut board);
@@ -57,6 +53,7 @@ pub fn init_overworld() -> Board {
   println!("Done!");
   return board;
 }
+
 pub fn init_cave() -> Board {
   let mut board = vec![vec!['#';32];16];
   let mut count = 0;
@@ -84,6 +81,10 @@ pub fn init_cave() -> Board {
   //Set player in cave
   print!("Set one minion (debug) in board ... ");
   place_minion(&mut board);
+  println!("Done!");
+  //Set cave exit
+  print!("Generate cave exit ...");
+  add_cave_exit(&mut board);
   println!("Done!");
   //Set frame
   print!("Set frame ... ");

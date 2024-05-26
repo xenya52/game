@@ -89,9 +89,16 @@ pub fn entity_moved(entity: &mut Entity) {
 }
 pub fn dead_entity(entity: Entity) -> bool 
 {
+    
     if entity.health <= 0 ||
        entity.basic_needs.hydrate <= 0 ||
        entity.basic_needs.starve <= 0 {
+        println!(r" _   _  ______  _____  _____ ______  _ ");
+        println!(r"| | | | |  _  \|_   _||  ___||  _  \| |");
+        println!(r"| | | | | | | |  | |  | |__  | | | || |");
+        println!(r"| | | | | | | |  | |  |  __| | | | || |");
+        println!(r"| |_| | | |/ /  _| |_ | |___ | |/ / |_|");
+        println!(r" \___/  |___/   \___/ \____/ |___/  (_)");
         true
     }
     else {

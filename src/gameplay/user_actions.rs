@@ -30,15 +30,15 @@ pub fn get_user_input() -> char {
   input_char
 }
 pub fn handle_input(usr_input: char, world: &mut World, entity: &mut Entity) {
-  let mut xy: Vec<usize>;
+  let xy: Vec<usize>;
   if world.is_on_overworld {
     xy = find_char_in_board(&world.overworld, '@');
   }
   else {
     xy = find_char_in_board(&world.cave, '@');
   }
-  let mut x: usize = xy[0];
-  let mut y: usize = xy[1];
+  let x: usize = xy[0];
+  let y: usize = xy[1];
 
   if movement_actions(world, usr_input, x, y, entity) {  
       match usr_input {

@@ -32,5 +32,4 @@ fn main() {
             entity_moved(&mut debug_minion);
         }
     }
-    println!("Hello, world!");
 }
