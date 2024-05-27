@@ -26,9 +26,10 @@ impl BasicNeeds {
 //////////
 //Entity//
 //////////
-#[derive(Clone, Copy)]
-pub struct Entity {
+#[derive(Clone)]
+pub struct Entity<> {
     // pub name: str, TODO
+    pub name: String,
     pub health: u32,
     pub strength: u32,
     pub actions: u64,
@@ -36,9 +37,9 @@ pub struct Entity {
     pub materials: Materials
 }
 impl Entity {
-    pub fn new(health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
+    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
         Entity {
-            // name : "test", //TODO
+            name,
             health,
             strength,
             actions,
@@ -49,6 +50,9 @@ impl Entity {
 }
 pub fn show_entity_status(entity: &Entity) {
     println!("<-=-=-=-=-=-=-=->");
+    println!("<Name: {}", entity.name);    
+    println!("<Convinience {}", entity.basic_needs.confident);
+    println!("<~~~~~~~~~~~~~~~>");
     println!("<Health: {}", entity.health);
     println!("<Strengh: {}", entity.strength);
     println!("<Total actions: {}", entity.actions);
@@ -75,7 +79,6 @@ pub fn show_entity_status(entity: &Entity) {
     else if entity.basic_needs.confident <= 8 {
         print!("{}",Colors::BrightYellowFg.value());
     }
-    println!("<Convinience {}", entity.basic_needs.confident);
     print!("{}",Colors::Reset.value());
     println!("<~~~~~~~~~~~~~~~>");
     println!("<Wood {}", entity.materials.wood);

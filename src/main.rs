@@ -13,10 +13,10 @@ fn main() {
     let mut world: World = World::new(overworld, cave);
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     let starter_materials: Materials = Materials::new(0, 0);
-    let mut debug_minion: Entity = Entity::new(5, 1, 0, starter_needs, starter_materials);
+    let mut debug_minion: Entity = Entity::new("minion_debug".to_string(),5, 1, 0, starter_needs, starter_materials);
     let mut usr_input:char = 'x';
 
-    while !game_over(usr_input, debug_minion) {
+    while !game_over(usr_input, debug_minion.clone()) {
         if world.is_on_overworld {
             print_overworld(&mut world.overworld);
             show_entity_status(&debug_minion);
