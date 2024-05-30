@@ -5,8 +5,7 @@ use crate::game_logic::Materials;
 /////////
 //Board//
 /////////
-pub type Board = Vec<Vec<char>>;
-pub type BBoard = Vec<Vec<Block>>;
+pub type Board = Vec<Vec<Block>>;
 #[derive(Clone)]
 pub struct Block_Type {
     pub name: String,
@@ -47,8 +46,12 @@ impl Block_Type {
             "air".to_string(), 0, 
             vec![Materials::new(0, 0)]
         );
+        let unbreakable: Block_Type = Block_Type::new(
+            "unbreakable".to_string(), 999, 
+        vec![Materials::new(0, 0)]
+        );
 
-        return vec![stone, dirt, water, wood, food, air] 
+        return vec![stone, dirt, water, wood, food, air, unbreakable] 
     }
 }
 #[derive(Clone)]
@@ -108,7 +111,13 @@ impl Block {
             "".to_string(),
              temp[5].clone()
         );
-        return vec![stone,dirt,water,wood,food, air];
+        let border: Block = Block::new(
+            6,
+            '/', 
+            "".to_string(), 
+        temp[6].clone()
+    );
+        return vec![stone,dirt,water,wood,food, air, border];
     }
 }
 pub struct World {

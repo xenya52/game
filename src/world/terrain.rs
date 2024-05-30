@@ -1,26 +1,22 @@
 use crate::{
   utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board}, 
-  world::{Board, World}};
+  world::{Board, Block, World}};
 //////////////////////
 ///External imports///
 //////////////////////
 use rand::{thread_rng, Rng, seq::SliceRandom};
 
-pub fn set_frame_in_board(board: &mut Board) {
-  let row_count = board.len();
-  let col_count = board.first().unwrap().len();
-
-  //first and last rows
-  for j in 0..col_count {
-      board[0][j] = '/'; // first row
-      board[row_count - 1][j] = '/'; // last row
-  }
-
-  //columns for rows in between
-  for i in 1..(row_count - 1) {
-      board[i][0] = '/'; // first colum
-      board[i][col_count - 1] = '/'; // last column
-  }
+pub fn add_border(given_board: &mut Board) {
+  let y_len: usize = given_board.len();
+    let x_len: usize = given_board[0].len();
+    for y in 0..y_len {
+        for x in 0..x_len {
+            if x >= x_len - 1 || x <= 0 || y >= y_len - 1 || y <= 0 {
+                //Setting x border
+                given_board[y][x] = Block::new_predefined_set()[6].clone()
+            }
+        }
+    }
 }
 
 ////////////////////

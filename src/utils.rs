@@ -16,11 +16,14 @@ pub fn get_rdm_yx(board: &mut Board) -> Vec<usize> {
     return vec![y,x]
 }
 
-pub fn find_char_in_board(board: &Board, given: char) -> Vec<usize> {
+pub fn find_char_in_board(given_board: &Board, given: char) -> Vec<usize> {
+    let y_len: usize = given_board.len();
+    let x_len: usize = given_board[0].len();
+
     let mut coordinates = Vec::new();
-    for (y, row) in board.iter().enumerate() {
-        for (x, &char) in row.iter().enumerate() {
-            if char == given {
+    for y in 0..y_len {
+        for x in 0..x_len {
+            if given_board[y][x].display_ascii == given {
                 coordinates.push(x);
                 coordinates.push(y)
             }
