@@ -1,43 +1,46 @@
-use crate::utils::get_rdm_yx;
 use crate::world::{
     Board,
+    Block,
     add_radom_food, add_radom_water, add_random_mountain, 
     add_cave, add_border, add_cave_exit};
 use crate::game_logic::place_minion;
 
-use super::world::{BBoard, Block, Block_Type};
+pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
+  print!("x = {}", x_size);
+  print!("y = {}", y_size);
+  let mut board: Vec<Vec<Block>> = vec![vec![
+    Block::new_predefined_set()[5].clone();
+    x_size];y_size];
+  let mut counter = 0;
 
-pub fn init_overworld() -> Board {
-  let mut board = vec![vec!['#';32];16];
-  let mut count = 0;
   //Generate barriers
   print!("Generate mountians ... ");
   loop {
-      count += 1;
+      counter += 1;
       add_random_mountain(&mut board);
-      if count == 10 {
+      if counter == 10 {
           break;
       }
   }
-  count = 0;
+  counter = 0;
   println!("Done!");
   //Generate water
   print!("Generate water ... ");
   loop {
-      count += 1;
+      counter += 1;
       add_radom_water(&mut board);
-      if count == 3 {
+      if counter == 3 {
           break;
       }
   }
-  count = 0;
+  counter = 0;
   println!("Done!");
   //Generate food
   print!("Generate food ... ");
   loop {
-      count += 1;
+      counter += 1;
       add_radom_food(&mut board);
-      if count == 4 {
+      if counter == 4 {
           break;
       }
   }
@@ -57,8 +60,10 @@ pub fn init_overworld() -> Board {
   return board;
 }
 
-pub fn init_cave() -> Board {
-  let mut board = vec![vec!['#';32];16];
+pub fn init_cave(x_size: usize, y_size: usize) -> Board {
+    let mut board: Vec<Vec<Block>> = vec![vec![
+        Block::new_predefined_set()[5].clone();
+        x_size];y_size];
   let mut count = 0;
   //Generate barriers
   print!("Generate rock ... ");
@@ -96,10 +101,9 @@ pub fn init_cave() -> Board {
   return board;
 }
 
-pub fn init_board(x_size: usize, y_size: usize) -> BBoard {
+pub fn init_board(x_size: usize, y_size: usize) -> Board {
     let mut a: Vec<Vec<Block>> = vec![vec![
                 Block::new_predefined_set()[5].clone();
                 x_size];y_size];
-    bboard_border(&mut a);
     return a
 }

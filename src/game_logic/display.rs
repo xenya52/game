@@ -40,7 +40,13 @@ pub fn print_overworld(given_board: &mut Board) {
 //       println!();
 //   }
 }
-pub fn print_cave(board: &mut Board) {
+pub fn print_cave(given_board: &mut Board) {
+    for (y, row) in given_board.iter_mut().enumerate() {
+        for (x, col) in row.iter_mut().enumerate() {
+            print!("{}", col.display_ascii);
+        }
+        println!();
+    }
 //   for (i, row) in board.iter().enumerate() {
 //       for (j,row) in row.iter().enumerate() {
 //           if row == &'@' {

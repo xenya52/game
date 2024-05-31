@@ -23,15 +23,13 @@ pub fn add_border(given_board: &mut Board) {
 //World generation//
 ////////////////////
 pub fn add_random_mountain(board: &mut Board) -> bool {
-  let c = get_rdm_yx(board);
-  let c_space = vec![c[0] + 2, c[1] + 2];
-
-  if is_inside_the_grid(board, c[1], c[0])
-  && is_inside_the_grid(board, c_space[1], c_space[0]) {
-      for i in 0..3 { // Iteriert über Zeilen
-          for j in 0..3 { // Iteriert über Spalten
-              let value = if thread_rng().gen_bool(0.5) { 'x' } else { 'X' };
-              board[c[0] + i][c[1] + j] = value;
+  let yx = get_rdm_yx(board);
+  let yx_space = vec![yx[0] + 2, yx[1] + 2];
+  if is_inside_the_grid(board, yx[1], yx[0])
+  && is_inside_the_grid(board, yx_space[1], yx_space[0]) {
+      for y in 0..3 {
+          for x in 0..3 {
+              board[yx[0] + y][yx[1] + x] = Block::new_predefined_set()[0].clone();
           }
       }
       true
@@ -40,42 +38,40 @@ pub fn add_random_mountain(board: &mut Board) -> bool {
   }
 }
 pub fn add_radom_water(board: &mut Board) {
-  let c:Vec<usize> = get_rdm_yx(board);
-  let c_space: Vec<usize> = vec![c[0] + 1, c[1] + 1];
-  if is_inside_the_grid(board, c[1], c[0])
-  && is_inside_the_grid(board, c_space[1], c_space[0]) {
-      for i in 0..2 {
-          for j in 0..2 {
-              let value = '~';
-              board[c[0] + i][c[1] + j] = value;
+  let yx:Vec<usize> = get_rdm_yx(board);
+  let yx_space: Vec<usize> = vec![yx[0] + 1, yx[1] + 1];
+  if is_inside_the_grid(board, yx[1], yx[0])
+  && is_inside_the_grid(board, yx_space[1], yx_space[0]) {
+      for y in 0..2 {
+          for x in 0..2 {
+              board[yx[0] + y][yx[1] + x] = Block::new_predefined_set()[2].clone();
           }
       }
   }
 }
 pub fn add_radom_food(board: &mut Board) {
-  let c:Vec<usize> = get_rdm_yx(board);
-  let c_space:Vec<usize> = vec![c[0] + 3, c[1] + 3];
-  let food: char = '+';
-  let wood: char = '|';
-  if is_inside_the_grid(board, c[1], c[0])
-  && is_inside_the_grid(board, c_space[1], c_space[0]) {
-          board[c[0] + 2][c[1]] = food;
-          board[c[0] + 2][c[1] + 1] = food;
-          board[c[0] + 2][c[1] + 2] = food;
-          board[c[0] + 2][c[1] + 3] = food;
-          board[c[0] + 1][c[1] + 1] = food;
-          board[c[0] + 1][c[1] + 2] = food;
-          board[c[0] + 3][c[1] + 1] = wood;
-          board[c[0] + 3][c[1] + 2] = wood;
+  let yx:Vec<usize> = get_rdm_yx(board);
+  let yx_space:Vec<usize> = vec![yx[0] + 3, yx[1] + 3];
+  if is_inside_the_grid(board, yx[1], yx[0])
+  && is_inside_the_grid(board, yx_space[1], yx_space[0]) {
+          board[yx[0] + 2][yx[1]] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 2][yx[1] + 1] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 2][yx[1] + 2] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 2][yx[1] + 3] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 1][yx[1] + 1] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 1][yx[1] + 2] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 3][yx[1] + 1] = Block::new_predefined_set()[3].clone();
+          board[yx[0] + 3][yx[1] + 2] = Block::new_predefined_set()[3].clone();
       }
   }
 pub fn add_cave(board: &mut Board) {
   let c:Vec<usize> = get_rdm_yx(board);
-  board[c[0]][c[1]] = 'o';
+  board[c[0]][c[1]] = Block::new_predefined_set()[7].clone()
 }
 pub fn add_cave_exit(board: &mut Board) {
   let xy = find_char_in_board(board, '@');
   let x = xy[0];
   let y = xy[1];
-  board[y][x+1] = 'o'
+  board[y][x+1] = Block::new_predefined_set()[7].clone()
+  
 }
