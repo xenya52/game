@@ -1,12 +1,25 @@
-use crate::game_logic::Materials;
+use crate::game_logic::Material;
 //////////////////////
 ///External imports///
 //////////////////////
 use colorized::*;
 use rand::{thread_rng, Rng};
 
+#[derive(Clone)] 
+pub struct Inventory {
+    pub materials: Vec<Material>,
+    pub space: u32
+}
+impl Inventory {
+    pub fn new(_space: u32) -> Inventory {
+        Inventory {
+            materials: vec![],
+            space: _space
+        }
+    }
+}
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone)]
 pub struct BasicNeeds {
     pub starve: u32,
     pub hydrate: u32,
@@ -33,17 +46,17 @@ pub struct Entity<> {
     pub strength: u32,
     pub actions: u64,
     pub basic_needs: BasicNeeds,
-    pub materials: Materials
+    pub inventory: Inventory
 }
 impl Entity {
-    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, materials: Materials) -> Self {
+    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: u32) -> Self {
         Entity {
             name,
             health,
             strength,
             actions,
             basic_needs,
-            materials,
+            inventory: Inventory::new(inventory_space),
         }
     }
 }
@@ -79,9 +92,6 @@ pub fn show_entity_status(entity: &Entity) {
         print!("{}",Colors::BrightYellowFg.value());
     }
     print!("{}",Colors::Reset.value());
-    println!("<~~~~~~~~~~~~~~~>");
-    println!("<Wood {}", entity.materials.wood);
-    println!("<Stone {}", entity.materials.stone);
     println!("<-=-=-=-=-=-=-=->");
 }
 pub fn entity_moved(entity: &mut Entity) {
