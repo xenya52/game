@@ -100,10 +100,3 @@ pub fn init_cave(x_size: usize, y_size: usize) -> Board {
   println!("Done!");
   return board;
 }
-
-pub fn init_board(x_size: usize, y_size: usize) -> Board {
-    let mut a: Vec<Vec<Block>> = vec![vec![
-                Block::new_predefined_set()[5].clone();
-                x_size];y_size];
-    return a
-}

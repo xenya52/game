@@ -67,3 +67,6 @@ pub fn print_cave(given_board: &mut Board) {
 //       println!();
 //   }
 }
+
+fn coloring_board(){
+}

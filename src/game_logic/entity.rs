@@ -1,10 +1,9 @@
-use crate::game_logic::{Materials};
+use crate::game_logic::Materials;
 //////////////////////
 ///External imports///
 //////////////////////
 use colorized::*;
-use rand::{thread_rng, Rng, seq::SliceRandom};
-
+use rand::{thread_rng, Rng};
 
 
 #[derive(Clone, Copy, Debug)]

@@ -2,14 +2,14 @@ mod utils;
 mod gameplay;
 use gameplay::{get_user_input,handle_input};
 mod world;
-use world::{init_board, init_cave, init_overworld, Board, World};
+use world::{init_cave, init_overworld, World};
 mod game_logic;
 use game_logic::{BasicNeeds, Materials, Entity, game_over, 
     print_overworld, print_cave,
     show_entity_status, entity_moved};
 fn main() {
-    let mut overworld = init_overworld(32,16);
-    let mut cave = init_cave(32,16);
+    let overworld = init_overworld(32,16);
+    let cave = init_cave(32,16);
     let mut world: World = World::new(overworld, cave);
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     let starter_materials: Materials = Materials::new(0, 0);

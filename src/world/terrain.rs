@@ -1,11 +1,6 @@
 use crate::{
   utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board}, 
-  world::{Board, Block, World}};
-//////////////////////
-///External imports///
-//////////////////////
-use rand::{thread_rng, Rng, seq::SliceRandom};
-
+  world::{Board, Block}};
 pub fn add_border(given_board: &mut Board) {
   let y_len: usize = given_board.len();
     let x_len: usize = given_board[0].len();

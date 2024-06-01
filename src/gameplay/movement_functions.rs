@@ -1,13 +1,4 @@
-use crate::world::{Board, World};
-use crate::game_logic::Entity;
-//////////////////////
-///External imports///
-//////////////////////
-// use crossterm::{
-//   event::{read, Event, KeyCode},
-//   terminal::{disable_raw_mode, enable_raw_mode}
-// };
-
+use crate::world::World;
 //////////////////////////////
 //General movement functions//
 //////////////////////////////
@@ -62,7 +53,7 @@ pub fn move_left(x: usize, y: usize, world: &mut World) {
   board[y][x] = temp;
 }
 
-pub fn movement_actions(world: &mut World, usr_input:char, mut x: usize, mut y: usize, entity: &mut Entity) -> bool {
+pub fn movement_actions(world: &mut World, usr_input:char, mut x: usize, mut y: usize) -> bool {
   match usr_input {
       'w' => y -= 1,
       'a' => x -= 1,

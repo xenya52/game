@@ -1,9 +1,9 @@
 use crate::world::{World, init_cave};
-pub enum WORLD_STATE {
-  is_on_overworld,
-  is_in_cave,
-  is_in_a_fight
-}
+// pub enum WORLD_STATE {
+//   is_on_overworld,
+//   is_in_cave,
+//   is_in_a_fight
+// }
 
 pub fn change_world_state(world: &mut World) {
   if world.is_on_overworld {
