@@ -49,12 +49,12 @@ pub fn add_radom_food(board: &mut Board) {
   let yx_space:Vec<usize> = vec![yx[0] + 3, yx[1] + 3];
   if is_inside_the_grid(board, yx[1], yx[0])
   && is_inside_the_grid(board, yx_space[1], yx_space[0]) {
-          board[yx[0] + 2][yx[1]] = Block::new_predefined_set()[4].clone();
-          board[yx[0] + 2][yx[1] + 1] = Block::new_predefined_set()[4].clone();
-          board[yx[0] + 2][yx[1] + 2] = Block::new_predefined_set()[4].clone();
-          board[yx[0] + 2][yx[1] + 3] = Block::new_predefined_set()[4].clone();
-          board[yx[0] + 1][yx[1] + 1] = Block::new_predefined_set()[4].clone();
-          board[yx[0] + 1][yx[1] + 2] = Block::new_predefined_set()[4].clone();
+          board[yx[0] + 2][yx[1]] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 2][yx[1] + 1] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 2][yx[1] + 2] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 2][yx[1] + 3] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 1][yx[1] + 1] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 1][yx[1] + 2] = Block::new_predefined_set()[9].clone();
           board[yx[0] + 3][yx[1] + 1] = Block::new_predefined_set()[3].clone();
           board[yx[0] + 3][yx[1] + 2] = Block::new_predefined_set()[3].clone();
       }

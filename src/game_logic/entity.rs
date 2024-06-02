@@ -46,7 +46,8 @@ pub struct Entity<> {
     pub strength: u32,
     pub actions: u64,
     pub basic_needs: BasicNeeds,
-    pub inventory: Inventory
+    pub inventory: Inventory,
+    pub turns: u32,
 }
 impl Entity {
     pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: u32) -> Self {
@@ -57,6 +58,7 @@ impl Entity {
             actions,
             basic_needs,
             inventory: Inventory::new(inventory_space),
+            turns: 0,
         }
     }
 }

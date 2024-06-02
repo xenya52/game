@@ -82,21 +82,21 @@ impl Block {
         let water: Block = Block::new(
             2, 
             '≈',
-            Color::Rgb { r: (42), g: (94), b: (145) },
+            Color::Rgb { r: (0), g: (247), b: (255) },
             block_types[3].clone(),
             materials[4].clone(),
         );
         let wood: Block = Block::new(
             3, 
             'H',
-            Color::Rgb { r: (74), g: (47), b: (4) },
+            Color::Rgb { r: (128), g: (95), b: (57) },
             block_types[2].clone(),
             materials[1].clone(),
         );
         let food: Block = Block::new(
             4,
             'O',
-            Color::Rgb { r: (125), g: (0), b: (0) },
+            Color::Rgb { r: (255), g: (0), b: (0) },
             block_types[2].clone(),
             materials[5].clone(),
         );
@@ -128,7 +128,14 @@ impl Block {
             block_types[0].clone(),
             materials[0].clone(),
         );
-        return vec![stone,dirt,water,wood,food, air, border, cave_entrance, minion];
+        let leaf: Block = Block::new(
+            8,
+            'X',
+            Color::Rgb { r: (17), g: (255), b: (0) },
+            block_types[0].clone(),
+            materials[0].clone(),
+        );
+        return vec![stone,dirt,water,wood,food, air, border, cave_entrance, minion, leaf];
     }
 }
 pub struct World {
