@@ -18,6 +18,7 @@ impl Material {
         let dirt: Material = Material::new("dirt".to_string());
         let water: Material = Material::new("water".to_string());
         let food: Material = Material::new("food".to_string());
-        return vec![nothing, wood, stone, dirt, water, food]
+        let leaf: Material = Material::new("leaf".to_string());
+        return vec![nothing, wood, stone, dirt, water, food, leaf]
     }
 }

@@ -4,7 +4,8 @@ use crate::world::Board;
 //////////////////////
 ///External imports///
 //////////////////////
-use rand::Rng;
+use rand::{Rng, thread_rng};
+use crate::world::Block;
 
 //////////////////////////
 //Get or set coordinates//
@@ -14,6 +15,10 @@ pub fn get_rdm_yx(board: &mut Board) -> Vec<usize> {
     let x: usize = rng.gen_range(2..board[1].len() - 2);
     let y: usize = rng.gen_range(2..board.len() - 2);
     return vec![y,x]
+}
+pub fn choose_between_two_blocks(index_a: usize, index_b: usize) -> Block {
+  let set = Block::new_predefined_set();
+  return if thread_rng().gen_bool(0.75) { set[index_a].clone()} else { set[index_b].clone()};
 }
 
 pub fn find_char_in_board(given_board: &Board, given: char) -> Vec<usize> {

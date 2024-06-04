@@ -1,5 +1,5 @@
 use crate::{
-  utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board}, 
+  utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board, choose_between_two_blocks}, 
   world::{Board, Block}};
 pub fn add_border(given_board: &mut Board) {
   let y_len: usize = given_board.len();
@@ -13,6 +13,19 @@ pub fn add_border(given_board: &mut Board) {
         }
     }
 }
+pub fn remove_border(given_board: &mut Board) {
+  let y_len: usize = given_board.len();
+    let x_len: usize = given_board[0].len();
+    for y in 0..y_len {
+        for x in 0..x_len {
+            if x >= x_len - 1 || x <= 0 || y >= y_len - 1 || y <= 0 {
+                //Setting x border
+                given_board[y][x] = Block::new_predefined_set()[5].clone()
+            }
+        }
+    }
+}
+
 
 ////////////////////
 //World generation//
@@ -49,12 +62,12 @@ pub fn add_radom_food(board: &mut Board) {
   let yx_space:Vec<usize> = vec![yx[0] + 3, yx[1] + 3];
   if is_inside_the_grid(board, yx[1], yx[0])
   && is_inside_the_grid(board, yx_space[1], yx_space[0]) {
-          board[yx[0] + 2][yx[1]] = Block::new_predefined_set()[9].clone();
-          board[yx[0] + 2][yx[1] + 1] = Block::new_predefined_set()[9].clone();
-          board[yx[0] + 2][yx[1] + 2] = Block::new_predefined_set()[9].clone();
-          board[yx[0] + 2][yx[1] + 3] = Block::new_predefined_set()[9].clone();
-          board[yx[0] + 1][yx[1] + 1] = Block::new_predefined_set()[9].clone();
-          board[yx[0] + 1][yx[1] + 2] = Block::new_predefined_set()[9].clone();
+          board[yx[0] + 2][yx[1]] = choose_between_two_blocks(9, 4);
+          board[yx[0] + 2][yx[1] + 1] = choose_between_two_blocks(9, 4);
+          board[yx[0] + 2][yx[1] + 2] = choose_between_two_blocks(9, 4);
+          board[yx[0] + 2][yx[1] + 3] = choose_between_two_blocks(9, 4);
+          board[yx[0] + 1][yx[1] + 1] = choose_between_two_blocks(9, 4);
+          board[yx[0] + 1][yx[1] + 2] = choose_between_two_blocks(9, 4);
           board[yx[0] + 3][yx[1] + 1] = Block::new_predefined_set()[3].clone();
           board[yx[0] + 3][yx[1] + 2] = Block::new_predefined_set()[3].clone();
       }

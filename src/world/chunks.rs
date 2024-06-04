@@ -49,10 +49,6 @@ pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
   print!("Generate cave entrance ...");
   add_cave(&mut board);
   println!("Done!");
-  //Set player in board
-  print!("Set one minion (Debug) in board ... ");
-  place_minion(&mut board);
-  println!("Done!");
   //Set frame
   print!("Set frame ... ");
   add_border(&mut board);

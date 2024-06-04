@@ -132,8 +132,8 @@ impl Block {
             8,
             'X',
             Color::Rgb { r: (17), g: (255), b: (0) },
-            block_types[0].clone(),
-            materials[0].clone(),
+            block_types[2].clone(),
+            materials[6].clone(),
         );
         return vec![stone,dirt,water,wood,food, air, border, cave_entrance, minion, leaf];
     }
