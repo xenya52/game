@@ -13,8 +13,8 @@ pub struct Inventory {
 impl Inventory {
     pub fn new(_space: u32) -> Inventory {
         Inventory {
-            materials: vec![],
-            space: _space
+            space: _space,
+            materials: Vec::new(),
         }
     }
 }

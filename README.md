@@ -1,7 +1,7 @@
 # TODOS
-- //TODO implement rezize_overworld_event, in game_movement
 - //TODO give items in movement functions, line 80
 - Rework materials
+- Make unique minion id
 - implement buildable structures
 - TODO find MAX u32 function for Water
 - Write a good md

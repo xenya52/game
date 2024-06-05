@@ -1,4 +1,6 @@
+use crate::game_logic::Material;
 use crate::world::{Block, World};
+use crate::Entity;
 //////////////////////////////
 //General movement functions//
 //////////////////////////////
@@ -53,7 +55,7 @@ pub fn move_left(x: usize, y: usize, world: &mut World) {
   board[y][x] = temp;
 }
 
-pub fn movement_actions(world: &mut World, usr_input:char, mut x: usize, mut y: usize) -> bool {
+pub fn movement_actions(world: &mut World, entity: &mut Entity, usr_input:char, mut x: usize, mut y: usize) -> bool {
   match usr_input {
       'w' => y -= 1,
       'a' => x -= 1,
@@ -79,7 +81,10 @@ pub fn movement_actions(world: &mut World, usr_input:char, mut x: usize, mut y: 
   }
   //If the block is breakable and has a durability of 0 up
   if board[y][x].block_type.durability == 0 {
-    //TODO give items
+    let set = Material::new_predefined_set();
+    let index: usize = set.iter().position(|&r| r.name == board[y][x].drop.name).unwrap();
+    entity.inventory.materials.append(&mut vec![set[index]]);
+
     if board[y][x].block_type.is_passable {
       board[y][x] = Block::new_predefined_set()[5].clone(); //Replace block with "air" should be passable
       return true;
