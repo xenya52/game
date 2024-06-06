@@ -1,3 +1,4 @@
+use crate::game_logic::Entity;
 use crate::utils::find_char_in_board;
 use crate::world::World;
 use crate::gameplay::{movement_actions, move_down, move_left, move_up, move_right};
@@ -28,7 +29,7 @@ pub fn get_user_input() -> char {
   disable_raw_mode().expect("Failed to disable raw mode");
   input
 }
-pub fn handle_input(usr_input: char, world: &mut World) {
+pub fn handle_input(usr_input: char, world: &mut World, entity: &mut Entity) {
   let xy: Vec<usize>;
   if world.is_on_overworld {
     xy = find_char_in_board(&world.overworld, '@');
@@ -39,7 +40,7 @@ pub fn handle_input(usr_input: char, world: &mut World) {
   let x: usize = xy[0];
   let y: usize = xy[1];
 
-  if movement_actions(world, usr_input, x, y) {  
+  if movement_actions(world, entity, usr_input, x, y) {  
       match usr_input {
           'w' => move_up(x, y, world),
           'a' => move_left(x, y, world),

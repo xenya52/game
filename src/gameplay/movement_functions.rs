@@ -82,8 +82,13 @@ pub fn movement_actions(world: &mut World, entity: &mut Entity, usr_input:char, 
   //If the block is breakable and has a durability of 0 up
   if board[y][x].block_type.durability == 0 {
     let set = Material::new_predefined_set();
-    let index: usize = set.iter().position(|&r| r.name == board[y][x].drop.name).unwrap();
-    entity.inventory.materials.append(&mut vec![set[index]]);
+    let index: usize = set.iter().position(|r| r.name == board[y][x].drop.name).unwrap();
+    if entity.inventory.materials.contains(&set[index]) {
+      
+    }
+    else {
+      entity.inventory.materials.append(&mut vec![set[index].clone()]);
+    }
 
     if board[y][x].block_type.is_passable {
       board[y][x] = Block::new_predefined_set()[5].clone(); //Replace block with "air" should be passable

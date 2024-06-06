@@ -3,9 +3,6 @@ use crate::world::Board;
 ///External imports///
 //////////////////////
 use crossterm::style::{style, Stylize};
-
-use super::Entity;
-
 /////////////////
 //Print a board//
 /////////////////
@@ -18,20 +15,4 @@ pub fn print_given_board(given_board: &mut Board) {
         }
         println!();
     }
-}
-pub fn display_entity_inventory(entity: &mut Entity) {
-    println!("<-=-=-=-=-=-=-=->");
-    for (index, item) in entity.inventory.materials.iter_mut().enumerate() {
-        if item.name != "nothing" {
-            println!("<~~~~~~~~~~~~~~~>");
-            print!("<{}. {} Amount = {}", index, item.name, item.amount);
-            if index % 3 == 0 {
-                print!("\n")
-            }
-            else {
-                print!(" | ")
-            }
-        }
-    }
-    println!("<-=-=-=-=-=-=-=->");
 }

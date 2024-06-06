@@ -61,40 +61,58 @@ impl Entity {
             turns: 0,
         }
     }
-}
-pub fn show_entity_status(entity: &Entity) {
-    println!("<-=-=-=-=-=-=-=->");
-    println!("<Name: {}", entity.name);    
-    println!("<Convinience {}", entity.basic_needs.confident);
-    println!("<~~~~~~~~~~~~~~~>");
-    println!("<Health: {}", entity.health);
-    println!("<Strengh: {}", entity.strength);
-    println!("<Total actions: {}", entity.actions);
-    println!("<~~~~~~~~~~~~~~~>");
-    if entity.basic_needs.starve <= 4 {
-        print!("{}",Colors::BrightRedFg.value());
+    pub fn show_entity_status(entity: &Entity) {
+        println!("<-=-=-=-=-=-=-=->");
+        println!("<Name: {}", entity.name);    
+        println!("<Convinience {}", entity.basic_needs.confident);
+        println!("<~~~~~~~~~~~~~~~>");
+        println!("<Health: {}", entity.health);
+        println!("<Strengh: {}", entity.strength);
+        println!("<Total actions: {}", entity.actions);
+        println!("<~~~~~~~~~~~~~~~>");
+        if entity.basic_needs.starve <= 4 {
+            print!("{}",Colors::BrightRedFg.value());
+        }
+        else if entity.basic_needs.starve <= 8 {
+            print!("{}",Colors::BrightYellowFg.value());
+        }
+        println!("<Starvation {}", entity.basic_needs.starve);
+        print!("{}",Colors::Reset.value());
+        if entity.basic_needs.hydrate <= 4 {
+            print!("{}",Colors::BrightRedFg.value());
+        }
+        else if entity.basic_needs.hydrate <= 8 {
+            print!("{}",Colors::BrightYellowFg.value());
+        }
+        println!("<Hydration {}", entity.basic_needs.hydrate);
+        print!("{}",Colors::Reset.value());
+        if entity.basic_needs.confident <= 4 {
+            print!("{}",Colors::BrightRedFg.value());
+        }
+        else if entity.basic_needs.confident <= 8 {
+            print!("{}",Colors::BrightYellowFg.value());
+        }
+        print!("{}",Colors::Reset.value());
+        println!("<-=-=-=-=-=-=-=->");
     }
-    else if entity.basic_needs.starve <= 8 {
-        print!("{}",Colors::BrightYellowFg.value());
+    pub fn display_entity_inventory(entity: &mut Entity) {
+        print!("<-=-=-=-=-=-=-=->\n<");
+        let mut index = entity.inventory.materials.len();
+        while index > 0 {
+            let cur_item = &entity.inventory.materials[index-1];
+            if cur_item.name != "nothing" {
+                print!("{}. {} Amount = {}", index, cur_item.name, cur_item.amount);
+                if index % 3 == 0 {
+                    print!("\n<")
+                }
+                else {
+                    print!(" | ")
+                }
+            }
+            index -= 1;
+        }
+        println!("\n<-=-=-=-=-=-=-=->");
     }
-    println!("<Starvation {}", entity.basic_needs.starve);
-    print!("{}",Colors::Reset.value());
-    if entity.basic_needs.hydrate <= 4 {
-        print!("{}",Colors::BrightRedFg.value());
-    }
-    else if entity.basic_needs.hydrate <= 8 {
-        print!("{}",Colors::BrightYellowFg.value());
-    }
-    println!("<Hydration {}", entity.basic_needs.hydrate);
-    print!("{}",Colors::Reset.value());
-    if entity.basic_needs.confident <= 4 {
-        print!("{}",Colors::BrightRedFg.value());
-    }
-    else if entity.basic_needs.confident <= 8 {
-        print!("{}",Colors::BrightYellowFg.value());
-    }
-    print!("{}",Colors::Reset.value());
-    println!("<-=-=-=-=-=-=-=->");
 }
 pub fn entity_moved(entity: &mut Entity) {
     entity.actions += 1;
