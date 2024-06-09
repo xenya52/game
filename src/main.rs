@@ -20,7 +20,6 @@ fn main() {
         if world.is_on_overworld {
             print_given_board(&mut world.overworld);
             Entity::show_entity_status(&debug_minion);
-            Entity::display_entity_inventory(&mut debug_minion);
             usr_input = get_user_input();
             handle_input(usr_input, &mut world, &mut debug_minion);
             entity_moved(&mut debug_minion);

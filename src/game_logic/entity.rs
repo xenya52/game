@@ -1,21 +1,33 @@
-use crate::game_logic::Material;
+use std::usize;
+
 //////////////////////
 ///External imports///
 //////////////////////
 use colorized::*;
 use rand::{thread_rng, Rng};
 
+use crate::world::Block;
+
 #[derive(Clone)] 
 pub struct Inventory {
-    pub materials: Vec<Material>,
-    pub space: u32
+    pub items: Vec<String>,
 }
 impl Inventory {
-    pub fn new(_space: u32) -> Inventory {
+    pub fn new(_space: usize) -> Self {
         Inventory {
-            space: _space,
-            materials: Vec::new(),
+            items: vec!["---".to_string(); _space],
         }
+    }
+    pub fn add(inventory: &mut Inventory, val: String) {
+        for i in 0..inventory.items.len() {
+            if inventory.items[i] == "---" {
+                inventory.items[i] = val;
+                break;
+            }
+        }
+    }
+    pub fn remove(inventory: &mut Inventory, index: usize) {
+        inventory.items[index] = "---".to_string();
     }
 }
 
@@ -47,10 +59,9 @@ pub struct Entity<> {
     pub actions: u64,
     pub basic_needs: BasicNeeds,
     pub inventory: Inventory,
-    pub turns: u32,
 }
 impl Entity {
-    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: u32) -> Self {
+    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: usize) -> Self {
         Entity {
             name,
             health,
@@ -58,8 +69,10 @@ impl Entity {
             actions,
             basic_needs,
             inventory: Inventory::new(inventory_space),
-            turns: 0,
         }
+    }
+    pub fn block_to_inventory(entity: &mut Entity, block: Block) {
+        Inventory::add(&mut entity.inventory, block.name);
     }
     pub fn show_entity_status(entity: &Entity) {
         println!("<-=-=-=-=-=-=-=->");
@@ -97,11 +110,11 @@ impl Entity {
     }
     pub fn display_entity_inventory(entity: &mut Entity) {
         print!("<-=-=-=-=-=-=-=->\n<");
-        let mut index = entity.inventory.materials.len();
+        let mut index = entity.inventory.items.len();
         while index > 0 {
-            let cur_item = &entity.inventory.materials[index-1];
-            if cur_item.name != "nothing" {
-                print!("{}. {} Amount = {}", index, cur_item.name, cur_item.amount);
+            let cur_item = &entity.inventory.items[index-1];
+            if cur_item != "nothing" {
+                print!("{}. {}", index, cur_item);
                 if index % 3 == 0 {
                     print!("\n<")
                 }

@@ -1,4 +1,3 @@
-use crate::game_logic::Material;
 //////////////////////
 ///External imports///
 //////////////////////
@@ -43,97 +42,83 @@ impl BlockType {
 #[derive(Clone)]
 
 pub struct Block {
-    pub number: u32,
+    pub name: String,
     pub display_ascii: char,
     pub display_color: Color,
     pub block_type: BlockType,
-    pub drop: Material,
-
 }
 // Returns a pack of blocks instead of a  specific 
 impl Block {
-    pub fn new(_number: u32, _display_ascii: char, _display_color: Color, _block_type: BlockType, _drop: Material) -> Self {
+    pub fn new(_name: String, _display_ascii: char, _display_color: Color, _block_type: BlockType) -> Self {
         Block {
-            number: _number,
+            name: _name,
             display_ascii: _display_ascii,
             display_color: _display_color,
             block_type: _block_type,
-            drop: _drop
         }
     } 
     pub fn new_predefined_set() -> Vec<Block> {
         let block_types = BlockType:: new_predefined_set();
-        let materials = Material::new_predefined_set();
         //[0] Stone, [1] Dirt, [2] Water, [3] Wood, [4] Food, [5] Air, [6] Border, [7] Cave entrance, [8] Minion
         let stone: Block = Block::new(
-            0, 
+            "Stone".to_string(),
             '#',
             Color::Rgb { r: (115), g: (115), b: (115) },
             block_types[1].clone(),
-            materials[0].clone()
         );
         let dirt: Block = Block::new(
-            1,
+            "Dirt".to_string(),
              '#', 
              Color::Rgb { r: (94), g: (55), b: (25) },
             block_types[1].clone(),
-            materials[3].clone(),
         );
         let water: Block = Block::new(
-            2, 
+            "Water".to_string(),
             '≈',
             Color::Rgb { r: (0), g: (247), b: (255) },
-            block_types[3].clone(),
-            materials[4].clone(),
+            block_types[1].clone(),
         );
         let wood: Block = Block::new(
-            3, 
+            "Wood".to_string(),
             'H',
             Color::Rgb { r: (128), g: (95), b: (57) },
             block_types[2].clone(),
-            materials[1].clone(),
         );
         let food: Block = Block::new(
-            4,
+            "Food".to_string(),
             'O',
             Color::Rgb { r: (255), g: (0), b: (0) },
             block_types[2].clone(),
-            materials[5].clone(),
         );
         let air: Block = Block::new(
-            5, 
+            "Air".to_string(),
             ' ', 
             Color::Reset,
             block_types[4].clone(),
-            materials[0].clone(),
         );
         let border: Block = Block::new(
-            6,
+            "Border".to_string(),
             '/', 
             Color::Reset, 
             block_types[0].clone(),
-            materials[0].clone(),
         );
         let cave_entrance: Block = Block::new(
-            7, 
+            "Cave_Entrance".to_string(),
             'o',
-            Color::Rgb { r: (46), g: (46), b: (46) }, 
+            Color::Rgb { r: (255), g: (255), b: (255) }, 
             block_types[0].clone(),
-            materials[0].clone(),
         );
         let minion: Block = Block::new(
-            8, 
+            "Minion".to_string(),
             '@',
             Color::Rgb { r: (255), g: (238), b: (0) },
             block_types[0].clone(),
-            materials[0].clone(),
         );
         let leaf: Block = Block::new(
-            8,
+            "Leaf".to_string(),
             'X',
             Color::Rgb { r: (17), g: (255), b: (0) },
             block_types[2].clone(),
-            materials[6].clone(),
         );
         return vec![stone,dirt,water,wood,food, air, border, cave_entrance, minion, leaf];
     }

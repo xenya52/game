@@ -6,8 +6,6 @@ use crate::world::{
 use crate::game_logic::place_minion;
 
 pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
-  print!("x = {}", x_size);
-  print!("y = {}", y_size);
   let mut board: Vec<Vec<Block>> = vec![
                                    vec![Block::new_predefined_set()[5].clone();
                                   x_size];y_size];
