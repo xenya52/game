@@ -5,8 +5,10 @@ mod world;
 use world::{init_cave, init_overworld, World};
 mod game_logic;
 use game_logic::{BasicNeeds, Entity, game_over, place_minion, 
-    entity_moved, print_given_board};
+    entity_moved, print_given_board, print_keybindings,
+    Player, Displaying};
 fn main() {
+    let mut player = Player::new();
     let overworld = init_overworld(8,8);
     let cave = init_cave(32,16);
     let mut world: World = World::new(overworld, cave);
@@ -17,11 +19,12 @@ fn main() {
     let mut usr_input:char = 'x';
 
     while !game_over(usr_input, debug_minion.clone()) {
-        if world.is_on_overworld {
+        if player.display_state == Displaying::Overworld {
             print_given_board(&mut world.overworld);
+            print_keybindings();
             Entity::show_entity_status(&debug_minion);
             usr_input = get_user_input();
-            handle_input(usr_input, &mut world, &mut debug_minion);
+            handle_input(&mut player, usr_input, &mut world, &mut debug_minion);
             entity_moved(&mut debug_minion);
             rezize_overworld_event(&mut world, 25, debug_minion.actions as u32);
         }
@@ -29,7 +32,7 @@ fn main() {
             print_given_board(&mut world.cave);
             Entity::show_entity_status(&debug_minion);
             usr_input = get_user_input();
-            handle_input(usr_input, &mut world, &mut debug_minion);
+            handle_input(&mut player, usr_input, &mut world, &mut debug_minion);
             entity_moved(&mut debug_minion);
         }
     }

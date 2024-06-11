@@ -16,3 +16,7 @@ pub fn print_given_board(given_board: &mut Board) {
         println!();
     }
 }
+pub fn print_keybindings() {
+    println!("Movement [w] [a] [s] [d]");
+    println!("Inventory [i]");
+}

@@ -126,14 +126,12 @@ impl Block {
 pub struct World {
     pub overworld: Board,
     pub cave: Board,
-    pub is_on_overworld: bool
 }
 impl World {
     pub fn new(_overworld: Vec<Vec<Block>>, _cave: Vec<Vec<Block>>) -> Self {
         World {
             overworld: _overworld,
             cave: _cave,
-            is_on_overworld: true
         }
     }
 }

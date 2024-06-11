@@ -1,5 +1,6 @@
 # TODOS
-- Show Keybindings
+- Implement "last_input" attribute for player
+- Make a change state Function for player, take the cave problem as example
 - Add inventory menu with own controls
 - Make food and water consumable
 - implement buildable structures
@@ -25,6 +26,9 @@
 -----------
 
 # Dev sitenodes
+## Enums
+### display
+!!! Important !!! Defines the current display state, as the name say
 ## Predefined sets
 ### Blocktype
 !!! Important !!! if the val of BlockType.durability is 404 it means the http code so there is no durability
@@ -82,3 +86,8 @@
 - *new* -> Creates a new Inventory with empty tiles as "---"
 - *add* -> Adds a String value to the *items* Vector
 - *remove* -> Replaces a String value to the empty tiles "---", in the *items* Vector
+## Player
+ - Basic idea is that the player handle functions to control the game
+### Attributes 
+ - *display_state* -> A Enum that holds the current printing state like "openend_inventory" etc...
+ - *last_input* -> Is the last input that the user of the program made *TODO IMPLEMENT*
