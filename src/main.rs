@@ -16,23 +16,22 @@ fn main() {
 
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     let mut debug_minion: Entity = Entity::new("minion_debug".to_string(),5, 1, 0, starter_needs, 20);
-    let mut usr_input:char = 'x';
 
-    while !game_over(usr_input, debug_minion.clone()) {
+    while !game_over(player.last_input, debug_minion.clone()) {
         if player.display_state == Displaying::Overworld {
             print_given_board(&mut world.overworld);
             print_keybindings();
             Entity::show_entity_status(&debug_minion);
-            usr_input = get_user_input();
-            handle_input(&mut player, usr_input, &mut world, &mut debug_minion);
+            player.last_input = get_user_input();
+            handle_input(&mut player, &mut world, &mut debug_minion);
             entity_moved(&mut debug_minion);
             rezize_overworld_event(&mut world, 25, debug_minion.actions as u32);
         }
-        else {
+        else if player.display_state == Displaying::Cave {
             print_given_board(&mut world.cave);
             Entity::show_entity_status(&debug_minion);
-            usr_input = get_user_input();
-            handle_input(&mut player, usr_input, &mut world, &mut debug_minion);
+            player.last_input = get_user_input();
+            handle_input(&mut player, &mut world, &mut debug_minion);
             entity_moved(&mut debug_minion);
         }
     }

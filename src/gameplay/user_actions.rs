@@ -29,7 +29,7 @@ pub fn get_user_input() -> char {
   disable_raw_mode().expect("Failed to disable raw mode");
   input
 }
-pub fn handle_input(player: &mut Player, usr_input: char, world: &mut World, entity: &mut Entity) {
+pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity) {
   let xy: Vec<usize>;
   if player.display_state == Displaying::Overworld {
     xy = find_char_in_board(&world.overworld, '@');
@@ -40,8 +40,8 @@ pub fn handle_input(player: &mut Player, usr_input: char, world: &mut World, ent
   let x: usize = xy[0];
   let y: usize = xy[1];
     
-  if movement_actions(world, player, entity, usr_input, x, y) {  
-      match usr_input {
+  if movement_actions(world, player, entity, x, y) {  
+      match player.last_input {
           'w' => move_up(x, y, world, player),
           'a' => move_left(x, y, world, player),
           's' => move_down(x, y, world, player),

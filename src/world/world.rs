@@ -7,7 +7,7 @@ use crossterm::style::Color;
 //Board//
 /////////
 pub type Board = Vec<Vec<Block>>;
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct BlockType {
     pub durability: u32, // 3 = three hits
     pub is_passable: bool,
@@ -39,8 +39,7 @@ impl BlockType {
         return vec![unbreakable, unbreakable_resource, breakable_resource, water, air] 
     }
 }
-#[derive(Clone)]
-
+#[derive(Clone, PartialEq)]
 pub struct Block {
     pub name: String,
     pub display_ascii: char,

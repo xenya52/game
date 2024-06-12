@@ -1,5 +1,4 @@
 # TODOS
-- Implement "last_input" attribute for player
 - Make a change state Function for player, take the cave problem as example
 - Add inventory menu with own controls
 - Make food and water consumable
@@ -87,7 +86,10 @@
 - *add* -> Adds a String value to the *items* Vector
 - *remove* -> Replaces a String value to the empty tiles "---", in the *items* Vector
 ## Player
- - Basic idea is that the player handle functions to control the game
+ - Basic idea is that the player handle basic attributes that the game will need in much functions 
 ### Attributes 
- - *display_state* -> A Enum that holds the current printing state like "openend_inventory" etc...
- - *last_input* -> Is the last input that the user of the program made *TODO IMPLEMENT*
+ - *display_state* A Enum that holds the current printing state like "openend_inventory" etc...
+ - *last_input* Is the last input that the user of the program made *TODO IMPLEMENT*
+### Functions 
+  - *new* -> Creates a bew Player object, the new function should also never take any parames because the start values are trivial
+  - *change_displaying_state* -> The name is self explaining

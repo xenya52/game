@@ -55,8 +55,9 @@ pub fn move_left(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y][x] = temp;
 }
 
-pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity, usr_input:char, mut x: usize, mut y: usize) -> bool {
-  match usr_input {
+pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity, mut x: usize, mut y: usize) -> bool {
+  Player::change_displaying_state(player, world, y, x);
+  match player.last_input {
       'w' => y -= 1,
       'a' => x -= 1,
       's' => y += 1,
@@ -69,15 +70,6 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
   }
   else {
     board = &mut world.cave
-  }
-
-  if board[y][x].display_ascii == 'o' { //TODO find a cleaner soltion for go into cave!!!
-    if player.display_state == Displaying::Overworld {
-      player.display_state = Displaying::Cave
-    }
-    else {
-      player.display_state = Displaying::Overworld
-    }
   }
   //If the block is breakable and has a durability of 0 up
   if board[y][x].block_type.durability == 0 {
