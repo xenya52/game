@@ -1,5 +1,4 @@
 # TODOS
-- Make a change state Function for player, take the cave problem as example
 - Add inventory menu with own controls
 - Make food and water consumable
 - implement buildable structures

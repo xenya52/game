@@ -56,7 +56,6 @@ pub fn move_left(x: usize, y: usize, world: &mut World, player: &Player) {
 }
 
 pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity, mut x: usize, mut y: usize) -> bool {
-  Player::change_displaying_state(player, world, y, x);
   match player.last_input {
       'w' => y -= 1,
       'a' => x -= 1,
@@ -71,6 +70,7 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
   else {
     board = &mut world.cave
   }
+  Player::change_displaying_state(player, board, y, x);
   //If the block is breakable and has a durability of 0 up
   if board[y][x].block_type.durability == 0 {
     Entity::block_to_inventory(entity, board[y][x].clone());
@@ -80,7 +80,7 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
     }
     else {
       board[y][x].block_type.durability += 4; // Reset durability because if its not passable but gives something it should be always 4
-      return false;   
+      return false;
     }
   }
   //If the block is breakable and has durability

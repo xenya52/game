@@ -19,7 +19,6 @@ pub fn get_user_input() -> char {
           match key_event.code {
               KeyCode::Char(c) => {
                   input = c;
-                  break;
               }
               _ => continue,
           }
