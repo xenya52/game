@@ -1,9 +1,8 @@
-use std::usize;
-
 //////////////////////
 ///External imports///
 //////////////////////
 use colorized::*;
+use crossterm::style::{style, Stylize, Color};
 use rand::{thread_rng, Rng};
 
 use crate::world::Block;
@@ -11,11 +10,13 @@ use crate::world::Block;
 #[derive(Clone)] 
 pub struct Inventory {
     pub items: Vec<String>,
+    pub index: usize,
 }
 impl Inventory {
     pub fn new(_space: usize) -> Self {
         Inventory {
             items: vec!["---".to_string(); _space],
+            index: 1,
         }
     }
     pub fn add(inventory: &mut Inventory, val: String) {
@@ -114,7 +115,14 @@ impl Entity {
         while index > 0 {
             let cur_item = &entity.inventory.items[index-1];
             if cur_item != "nothing" {
-                print!("{}. {}", index, cur_item);
+                if index == entity.inventory.index {
+                  let styled_content = style(cur_item)
+                      .with(Color::Rgb {r: (255), g: (255), b: (255)});
+                  print!("{}", styled_content)
+                }
+                else {
+                  print!("{}. {}", index, cur_item);
+                }
                 if index % 3 == 0 {
                     print!("\n<")
                 }

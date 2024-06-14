@@ -31,8 +31,10 @@ fn main() {
         }
         player.last_input = get_user_input();
         handle_input(&mut player, &mut world, &mut debug_minion);
-        entity_moved(&mut debug_minion);
-        rezize_overworld_event(&mut world, 25, debug_minion.actions as u32);
+        if player.display_state != Displaying::Inventory {
+          entity_moved(&mut debug_minion);
+          rezize_overworld_event(&mut world, 25, debug_minion.actions as u32);
+        }
         print_keybindings();
     }
 }

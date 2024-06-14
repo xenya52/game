@@ -1,7 +1,7 @@
 use crate::game_logic::{Entity, Player, Displaying};
 use crate::utils::find_char_in_board;
 use crate::world::World;
-use crate::gameplay::{movement_actions, move_down, move_left, move_up, move_right};
+use crate::gameplay::{movement_actions, inventory_actions, move_down, move_left, move_up, move_right};
 //////////////////////
 ///External imports///
 //////////////////////
@@ -19,6 +19,7 @@ pub fn get_user_input() -> char {
           match key_event.code {
               KeyCode::Char(c) => {
                   input = c;
+                  break;
               }
               _ => continue,
           }
@@ -38,15 +39,18 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   }
   let x: usize = xy[0];
   let y: usize = xy[1];
-    
-  if movement_actions(world, player, entity, x, y) {  
+  if player.display_state == Displaying::Inventory {
+    inventory_actions(player, entity, world, y, x);
+  }
+  else {
+    if movement_actions(world, player, entity, x, y) {  
       match player.last_input {
-          'w' => move_up(x, y, world, player),
-          'a' => move_left(x, y, world, player),
-          's' => move_down(x, y, world, player),
-          'd' => move_right(x, y, world, player),
-          'i' => player.display_state = Displaying::Inventory,
-          _ => println!("Error"),
-      }
+        'w' => move_up(x, y, world, player),
+        'a' => move_left(x, y, world, player),
+        's' => move_down(x, y, world, player),
+        'd' => move_right(x, y, world, player),
+        _ => println!("Error"),
+        }
+    }
   }
 }

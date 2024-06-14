@@ -1,6 +1,4 @@
 # TODOS
-- Add inventory menu with own controls
-- Make food and water consumable
 - implement buildable structures
 - Make unique minion id
 - Let spawn caves randomly and make then unique

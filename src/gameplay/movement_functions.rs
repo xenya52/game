@@ -1,5 +1,5 @@
 use crate::game_logic::{Player, Displaying};
-use crate::world::{Block, World};
+use crate::world::{Block, Board, World};
 use crate::Entity;
 //////////////////////////////
 //General movement functions//
@@ -54,6 +54,33 @@ pub fn move_left(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y][x - 1] = board[y][x].clone();
   board[y][x] = temp;
 }
+pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut World, y: usize, x: usize) {
+  let index = entity.inventory.index - 1;
+  match player.last_input {
+    'd' => {
+      if 0 < index {
+        entity.inventory.index -= 1;
+      }
+    }
+    'a' => {
+      if entity.inventory.items.len() - 1 > index {
+        entity.inventory.index += 1;
+      }
+    }
+    'c' => {
+      print!("{}", entity.inventory.items[index]);
+      if entity.inventory.items[index] == "Food" {
+        entity.inventory.items[index] = "---".to_string();
+        entity.basic_needs.starve = 10;
+      } 
+      else if entity.inventory.items[index] == "Water" {
+        entity.inventory.items[index] = "---".to_string();
+        entity.basic_needs.hydrate = 10;
+      }
+    }
+    _ => {Player::change_displaying_state(player, get_board(world, player.last_display_state.clone()), y, x)}
+  }
+}
 
 pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity, mut x: usize, mut y: usize) -> bool {
   match player.last_input {
@@ -63,13 +90,8 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
       'd' => x += 1,
       _ => println!("Error")
   }
-  let &mut board;
-  if player.display_state == Displaying::Overworld {
-    board = &mut world.overworld;
-  }
-  else {
-    board = &mut world.cave
-  }
+  let board = get_board(world, player.last_display_state.clone());
+  
   Player::change_displaying_state(player, board, y, x);
   //If the block is breakable and has a durability of 0 up
   if board[y][x].block_type.durability == 0 {
@@ -94,5 +116,13 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
   }
   else {
       return false
+  }
+}
+fn get_board(world: &mut World, last_display: Displaying) -> &mut Board {
+  if last_display == Displaying::Overworld {
+    return &mut world.overworld
+  }
+  else {
+    return &mut world.cave
   }
 }
