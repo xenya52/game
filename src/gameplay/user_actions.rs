@@ -30,15 +30,8 @@ pub fn get_user_input() -> char {
   input
 }
 pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity) {
-  let xy: Vec<usize>;
-  if player.display_state == Displaying::Overworld {
-    xy = find_char_in_board(&world.overworld, '@');
-  }
-  else {
-    xy = find_char_in_board(&world.cave, '@');
-  }
-  let x: usize = xy[0];
-  let y: usize = xy[1];
+  let y = player.y;
+  let x = player.x;
   if player.display_state == Displaying::Inventory {
     inventory_actions(player, entity, world, y, x);
   }
@@ -53,4 +46,5 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
         }
     }
   }
+  Player::player_made_turn(player, world);
 }

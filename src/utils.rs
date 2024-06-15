@@ -1,12 +1,10 @@
-use std::vec;
-
-use crate::world::Board;
+use crate::world::{Board, Block, World};
+use crate::game_logic::Displaying;
 //////////////////////
 ///External imports///
 //////////////////////
 use rand::{Rng, thread_rng};
-use crate::world::Block;
-
+use std::vec;
 //////////////////////////
 //Get or set coordinates//
 //////////////////////////
@@ -45,4 +43,12 @@ pub fn is_inside_the_grid(board: &mut Board, x: usize, y: usize) -> bool {
     else {
         true
     }
+}
+pub fn get_board(world: &mut World, last_display: Displaying) -> &mut Board {
+  if last_display == Displaying::Overworld {
+    return &mut world.overworld;
+  }
+  else {
+    return &mut world.cave;
+  }
 }

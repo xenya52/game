@@ -1,6 +1,6 @@
-use crate::game_logic::{Player, Displaying};
-use crate::world::{Block, Board, World};
-use crate::Entity;
+use crate::game_logic::{Player, Entity, Displaying};
+use crate::world::{Block, World};
+use crate::utils::get_board;
 //////////////////////////////
 //General movement functions//
 //////////////////////////////
@@ -116,13 +116,5 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
   }
   else {
       return false
-  }
-}
-fn get_board(world: &mut World, last_display: Displaying) -> &mut Board {
-  if last_display == Displaying::Overworld {
-    return &mut world.overworld
-  }
-  else {
-    return &mut world.cave
   }
 }
