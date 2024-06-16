@@ -1,5 +1,4 @@
-use crate::game_logic::{Entity, Player, Displaying};
-use crate::utils::find_char_in_board;
+use crate::game_logic::{Entity, Player, Displaying, MoveDirections};
 use crate::world::World;
 use crate::gameplay::{movement_actions, inventory_actions, move_down, move_left, move_up, move_right};
 //////////////////////
@@ -33,18 +32,27 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   let y = player.y;
   let x = player.x;
   if player.display_state == Displaying::Inventory {
-    inventory_actions(player, entity, world, y, x);
+    inventory_actions(player, entity, world);
   }
   else {
-    if movement_actions(world, player, entity, x, y) {  
+    if movement_actions(world, player, entity, x, y) {
       match player.last_input {
-        'w' => move_up(x, y, world, player),
-        'a' => move_left(x, y, world, player),
-        's' => move_down(x, y, world, player),
-        'd' => move_right(x, y, world, player),
-        _ => println!("Error"),
-        }
+        'w' => Player::movement(player, MoveDirections::Up),
+        'a' => Player::movement(player, MoveDirections::Left),
+        's' => Player::movement(player, MoveDirections::Down),
+        'd' => Player::movement(player, MoveDirections::Right),
+        _ => println!("Error: Invalid input in handle_input"),
+      }
     }
+  //  if movement_actions(world, player, entity, x, y) {  
+  //    match player.last_input {
+  //      'w' => move_up(world, player),
+  //      'a' => move_left(world, player),
+  //      's' => move_down(world, player),
+  //      'd' => move_right(world, player),
+  //      _ => println!("Error"),
+  //      }
+  //  }
   }
-  Player::player_made_turn(player, world);
+  //Player::player_made_turn(player, world); TODO
 }

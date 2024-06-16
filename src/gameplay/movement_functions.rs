@@ -4,7 +4,9 @@ use crate::utils::get_board;
 //////////////////////////////
 //General movement functions//
 //////////////////////////////
-pub fn move_up(x: usize, y: usize, world: &mut World, player: &Player) {
+pub fn move_up(world: &mut World, player: &Player) {
+  let y = player.y;
+  let x = player.x;
   let &mut board;
   if player.display_state == Displaying::Overworld{
     board = &mut world.overworld;
@@ -16,7 +18,9 @@ pub fn move_up(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y - 1][x] = board[y][x].clone();
   board[y][x] = temp;
 }
-pub fn move_down(x: usize, y: usize, world: &mut World, player: &Player) {
+pub fn move_down(world: &mut World, player: &Player) {
+  let y = player.y;
+  let x = player.x;
   let &mut board;
   if player.display_state == Displaying::Overworld {
     board = &mut world.overworld;
@@ -29,7 +33,9 @@ pub fn move_down(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y][x] = temp;
 }
 
-pub fn move_right(x: usize, y: usize, world: &mut World, player: &Player) {
+pub fn move_right(world: &mut World, player: &Player) {
+  let y = player.y;
+  let x = player.x;
   let &mut board;
   if player.display_state == Displaying::Overworld {
     board = &mut world.overworld;
@@ -42,7 +48,9 @@ pub fn move_right(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y][x] = temp;
 }
 
-pub fn move_left(x: usize, y: usize, world: &mut World, player: &Player) {
+pub fn move_left(world: &mut World, player: &Player) {
+  let y = player.y;
+  let x = player.x;
   let &mut board;
   if player.display_state == Displaying::Overworld {
     board = &mut world.overworld;
@@ -54,7 +62,9 @@ pub fn move_left(x: usize, y: usize, world: &mut World, player: &Player) {
   board[y][x - 1] = board[y][x].clone();
   board[y][x] = temp;
 }
-pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut World, y: usize, x: usize) {
+pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut World) {
+  let y = player.y;
+  let x = player.x;
   let index = entity.inventory.index - 1;
   match player.last_input {
     'd' => {

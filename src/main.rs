@@ -14,18 +14,17 @@ fn main() {
     let mut world: World = World::new(overworld, cave);
     place_minion(&mut world.overworld);
     
-    let coordinates = find_char_in_board(&world.overworld, '@');
-    let mut player = Player::new(coordinates[0], coordinates[1]);
+    let mut player = Player::new(1, 1);
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     let mut debug_minion: Entity = Entity::new("minion_debug".to_string(),5, 1, 0, starter_needs, 20);
 
     while !game_over(player.last_input, debug_minion.clone()) {
         if player.display_state == Displaying::Overworld {
-          print_given_board(&mut world.overworld);
+          print_given_board(&mut world.overworld, &mut player);
           Entity::show_entity_status(&debug_minion);
         }
         else if player.display_state == Displaying::Cave {
-          print_given_board(&mut world.cave);
+          print_given_board(&mut world.cave, &mut player);
           Entity::show_entity_status(&debug_minion);
         }
         else if player.display_state == Displaying::Inventory {
@@ -35,7 +34,7 @@ fn main() {
         handle_input(&mut player, &mut world, &mut debug_minion);
         if player.display_state != Displaying::Inventory {
           entity_moved(&mut debug_minion);
-          rezize_overworld_event(&mut world, 25, debug_minion.actions as u32);
+          rezize_overworld_event(&mut world, 25, player.turns as u32);
         }
         print_keybindings();
     }

@@ -1,9 +1,8 @@
 # TODOS
 - implement "playercursor"
-- Make unique minion id
-- make control minion function 
 - implement buildable structures
 - Let spawn caves randomly and make then unique
+- implement render distance
 - Rework your game loop / Watch space invaders tutorial
 - implement regrowable trees
 - Idea for worldstates

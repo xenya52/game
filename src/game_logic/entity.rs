@@ -53,7 +53,6 @@ impl BasicNeeds {
 //////////
 #[derive(Clone)]
 pub struct Entity<> {
-    // pub name: str, TODO
     pub name: String,
     pub health: u32,
     pub strength: u32,
