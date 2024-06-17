@@ -5,7 +5,7 @@ use colorized::*;
 use crossterm::style::{style, Stylize, Color};
 use rand::{thread_rng, Rng};
 
-use crate::world::Block;
+use crate::{utils::find_char_in_board, world::Block};
 
 #[derive(Clone)] 
 pub struct Inventory {
@@ -53,6 +53,8 @@ impl BasicNeeds {
 //////////
 #[derive(Clone)]
 pub struct Entity<> {
+    pub y: usize,
+    pub x: usize,
     pub name: String,
     pub health: u32,
     pub strength: u32,
@@ -61,8 +63,10 @@ pub struct Entity<> {
     pub inventory: Inventory,
 }
 impl Entity {
-    pub fn new(name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: usize) -> Self {
+    pub fn new(y: usize, x: usize, name: String, health: u32, strength: u32, actions: u64, basic_needs: BasicNeeds, inventory_space: usize) -> Self {
         Entity {
+            y,
+            x,
             name,
             health,
             strength,

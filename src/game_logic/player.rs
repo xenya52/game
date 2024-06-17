@@ -4,6 +4,8 @@ use crate::{utils::{find_char_in_board, get_board}, world::{Block, Board, World}
 /////////////////
 use std::fmt;
 
+use super::{entity, Entity};
+
 pub enum MoveDirections {
   Up,
   Down,
@@ -28,6 +30,7 @@ impl fmt::Display for Displaying {
 }
 pub struct Player {
   pub last_display_state: Displaying,
+  pub current_entity: String,
   pub display_state: Displaying,
   pub last_input: char,
   pub turns: usize,
@@ -38,11 +41,21 @@ impl Player {
   pub fn new(_y: usize, _x: usize) -> Self {
     Player {
       last_input: 'E',
+      current_entity: "Nothing".to_string(),
       display_state: Displaying::Overworld,
       last_display_state: Displaying::Overworld,
       turns: 0,
       y: _y,
       x: _x,
+    }
+  }
+  pub fn control_being(player: &mut Player, entity: &mut Entity) {
+    if player.current_entity == "Nothing"  && player.x == entity.x && player.y == entity.y {
+      player.current_entity = entity.name.clone();
+      println!("Controls the entity now");
+    }
+    else {
+      player.current_entity = "Nothing".to_string();
     }
   }
   pub fn movement(player: &mut Player, movement: MoveDirections) {

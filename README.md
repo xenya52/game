@@ -1,5 +1,4 @@
 # TODOS
-- implement "playercursor"
 - implement buildable structures
 - Let spawn caves randomly and make then unique
 - implement render distance

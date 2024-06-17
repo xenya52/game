@@ -29,20 +29,17 @@ pub fn get_user_input() -> char {
   input
 }
 pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity) {
-  let y = player.y;
-  let x = player.x;
   if player.display_state == Displaying::Inventory {
     inventory_actions(player, entity, world);
   }
   else {
-    if movement_actions(world, player, entity, x, y) {
-      match player.last_input {
-        'w' => Player::movement(player, MoveDirections::Up),
-        'a' => Player::movement(player, MoveDirections::Left),
-        's' => Player::movement(player, MoveDirections::Down),
-        'd' => Player::movement(player, MoveDirections::Right),
-        _ => println!("Error: Invalid input in handle_input"),
-      }
+    match player.last_input {
+      'w' => Player::movement(player, MoveDirections::Up),
+      'a' => Player::movement(player, MoveDirections::Left),
+      's' => Player::movement(player, MoveDirections::Down),
+      'd' => Player::movement(player, MoveDirections::Right),
+      'r' => Player::control_being(player, entity),
+      _ => println!("Error: Invalid input in handle_input"),
     }
   //  if movement_actions(world, player, entity, x, y) {  
   //    match player.last_input {
