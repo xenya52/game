@@ -1,11 +1,8 @@
-use crate::{utils::{find_char_in_board, get_board}, world::{Block, Board, World}};
+use crate::world::{Block, Board};
+use crate::game_logic::Entity;
 /////////////////
 //Print a board//
 /////////////////
-use std::fmt;
-
-use super::{entity, Entity};
-
 pub enum MoveDirections {
   Up,
   Down,
@@ -19,15 +16,6 @@ pub enum Displaying {
   Inventory,
 }
 
-impl fmt::Display for Displaying {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-       match self {
-           Displaying::Overworld => write!(f, "Overworld"),
-           Displaying::Cave => write!(f, "Cave"),
-           Displaying::Inventory => write!(f, "Inventory"),
-       }
-    }
-}
 pub struct Player {
   pub last_display_state: Displaying,
   pub current_entity: String,
@@ -92,7 +80,6 @@ impl Player {
         }
       }
     }
-    println!("!!!! last {}, display_state {}", player.last_display_state, player.display_state);
     if player.last_display_state == player.display_state {
       player.last_display_state = player.display_state.clone();
     }
