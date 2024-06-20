@@ -32,7 +32,7 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   if player.display_state == Displaying::Inventory {
     inventory_actions(player, entity, world);
   }
-  else {
+  else if player.current_entity == "Nothing" {
     match player.last_input {
       'w' => Player::movement(player, MoveDirections::Up),
       'a' => Player::movement(player, MoveDirections::Left),
@@ -41,15 +41,15 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
       'r' => Player::control_being(player, entity),
       _ => println!("Error: Invalid input in handle_input"),
     }
-  //  if movement_actions(world, player, entity, x, y) {  
-  //    match player.last_input {
-  //      'w' => move_up(world, player),
-  //      'a' => move_left(world, player),
-  //      's' => move_down(world, player),
-  //      'd' => move_right(world, player),
-  //      _ => println!("Error"),
-  //      }
-  //  }
+  }
+  else {  
+    match player.last_input {
+      'w' => move_up(world, player),
+      'a' => move_left(world, player),
+      's' => move_down(world, player),
+      'd' => move_right(world, player),
+      _ => println!("Error"),
+    }
   }
   //Player::player_made_turn(player, world); TODO
 }
