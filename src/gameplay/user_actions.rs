@@ -42,14 +42,17 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
       _ => println!("Error: Invalid input in handle_input"),
     }
   }
-  else {  
-    match player.last_input {
-      'w' => move_up(world, player),
-      'a' => move_left(world, player),
-      's' => move_down(world, player),
-      'd' => move_right(world, player),
-      _ => println!("Error"),
+  else {
+    if movement_actions(world, player, entity) {
+      match player.last_input {
+        'w' => move_up(world, player),
+        'a' => move_left(world, player),
+        's' => move_down(world, player),
+        'd' => move_right(world, player),
+        _ => println!("Error"),
+      }
     }
   }
-  //Player::player_made_turn(player, world); TODO
+  Player::player_made_turn(player);
+  Player::debug(player);
 }

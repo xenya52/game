@@ -92,7 +92,9 @@ pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut W
   }
 }
 
-pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity, mut x: usize, mut y: usize) -> bool {
+pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Entity) -> bool {
+  let mut y = player.y;
+  let mut x = player.x;
   match player.last_input {
       'w' => y -= 1,
       'a' => x -= 1,

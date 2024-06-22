@@ -37,6 +37,10 @@ impl Player {
       x: _x,
     }
   }
+  pub fn debug(player: &Player) {
+    println!("x = {}, y = {}, turns = {}", player.x, player.y, player.turns);
+    println!("cur_entity = {}", player.current_entity);
+  }
   pub fn control_being(player: &mut Player, entity: &mut Entity) {
     if player.current_entity == "Nothing"  && player.x == entity.x && player.y == entity.y {
       player.current_entity = entity.name.clone();

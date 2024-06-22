@@ -5,7 +5,9 @@ use colorized::*;
 use crossterm::style::{style, Stylize, Color};
 use rand::{thread_rng, Rng};
 
-use crate::{utils::find_char_in_board, world::Block};
+use crate::{utils::find_char_in_board, world::{Block, Board}};
+use crate::game_logic::Player;
+use super::{MoveDirections};
 
 #[derive(Clone)] 
 pub struct Inventory {
@@ -74,6 +76,22 @@ impl Entity {
             basic_needs,
             inventory: Inventory::new(inventory_space),
         }
+    }
+    pub fn movement(player: &mut Player, entity: &mut Entity, movement: MoveDirections, board: &mut Board) {
+      let prev_y = entity.y;
+      let prev_x = entity.x;
+      let air = Block::new_predefined_set()[5].clone();
+      let player = Block::new_predefined_set()[8].clone();
+      match movement {
+        MoveDirections::Up => entity.y -= 1,
+        MoveDirections::Down => entity.y += 1,
+        MoveDirections::Left => entity.x -= 1,
+        MoveDirections::Right => entity.x += 1,
+      }
+      board[prev_y][prev_x] = air;
+      board[entity.y][entity.x] = player;
+      player.y = entity.y;
+      player.x = entity.x;
     }
     pub fn block_to_inventory(entity: &mut Entity, block: Block) {
         Inventory::add(&mut entity.inventory, block.name);
