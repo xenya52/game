@@ -18,8 +18,8 @@ fn main() {
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     
     let entity_coords = find_char_in_board(&world.overworld, '@');
-    let mut debug_minion: Entity = Entity::new(entity_coords[0], entity_coords[1],"minion_debug".to_string(),5, 1, 0, starter_needs, 20);
-
+    let mut debug_minion: Entity = Entity::new(entity_coords[1], entity_coords[0],"minion_debug".to_string(),5, 1, 0, starter_needs, 20);
+    
     while !game_over(player.last_input, debug_minion.clone()) {
         if player.display_state == Displaying::Overworld {
           print_given_board(&mut world.overworld, &mut player);

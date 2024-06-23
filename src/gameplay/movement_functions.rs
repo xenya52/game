@@ -1,67 +1,7 @@
 use crate::game_logic::{Player, Entity, Displaying};
 use crate::world::{Block, World};
 use crate::utils::get_board;
-//////////////////////////////
-//General movement functions//
-//////////////////////////////
-pub fn move_up(world: &mut World, player: &Player) {
-  let y = player.y;
-  let x = player.x;
-  let &mut board;
-  if player.display_state == Displaying::Overworld{
-    board = &mut world.overworld;
-  }
-  else {
-    board = &mut world.cave
-  }
-  let temp = board[y - 1][x].clone();
-  board[y - 1][x] = board[y][x].clone();
-  board[y][x] = temp;
-}
-pub fn move_down(world: &mut World, player: &Player) {
-  let y = player.y;
-  let x = player.x;
-  let &mut board;
-  if player.display_state == Displaying::Overworld {
-    board = &mut world.overworld;
-  }
-  else {
-    board = &mut world.cave
-  }
-  let temp = board[y + 1][x].clone();
-  board[y + 1][x] = board[y][x].clone();
-  board[y][x] = temp;
-}
 
-pub fn move_right(world: &mut World, player: &Player) {
-  let y = player.y;
-  let x = player.x;
-  let &mut board;
-  if player.display_state == Displaying::Overworld {
-    board = &mut world.overworld;
-  }
-  else {
-    board = &mut world.cave
-  }
-  let temp = board[y][x + 1].clone();
-  board[y][x + 1] = board[y][x].clone();
-  board[y][x] = temp;
-}
-
-pub fn move_left(world: &mut World, player: &Player) {
-  let y = player.y;
-  let x = player.x;
-  let &mut board;
-  if player.display_state == Displaying::Overworld {
-    board = &mut world.overworld;
-  }
-  else {
-    board = &mut world.cave
-  }
-  let temp = board[y][x - 1].clone();
-  board[y][x - 1] = board[y][x].clone();
-  board[y][x] = temp;
-}
 pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut World) {
   let y = player.y;
   let x = player.x;

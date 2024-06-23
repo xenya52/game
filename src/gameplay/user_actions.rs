@@ -1,6 +1,7 @@
 use crate::game_logic::{Entity, Player, Displaying, MoveDirections};
-use crate::world::World;
-use crate::gameplay::{movement_actions, inventory_actions, move_down, move_left, move_up, move_right};
+use crate::utils::{get_board, find_char_in_board};
+use crate::world::{Block, World};
+use crate::gameplay::{movement_actions, inventory_actions};
 //////////////////////
 ///External imports///
 //////////////////////
@@ -45,14 +46,14 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   else {
     if movement_actions(world, player, entity) {
       match player.last_input {
-        'w' => move_up(world, player),
-        'a' => move_left(world, player),
-        's' => move_down(world, player),
-        'd' => move_right(world, player),
+        'w' => Entity::movement(player, entity, MoveDirections::Up, world),
+        'a' => Entity::movement(player, entity, MoveDirections::Left, world),
+        's' => Entity::movement(player, entity, MoveDirections::Down, world),
+        'd' => Entity::movement(player, entity, MoveDirections::Right, world),
+
         _ => println!("Error"),
       }
     }
   }
   Player::player_made_turn(player);
-  Player::debug(player);
 }
