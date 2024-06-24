@@ -50,7 +50,7 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
         'a' => Entity::movement(player, entity, MoveDirections::Left, world),
         's' => Entity::movement(player, entity, MoveDirections::Down, world),
         'd' => Entity::movement(player, entity, MoveDirections::Right, world),
-
+        't' => player.current_entity = "Nothing".to_string(),
         _ => println!("Error"),
       }
     }
