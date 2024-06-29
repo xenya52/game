@@ -1,4 +1,4 @@
-use crate::game_logic::{Player, Entity, Displaying};
+use crate::game_logic::{Player, Entity};
 use crate::world::{Block, World};
 use crate::utils::get_board;
 
@@ -40,7 +40,7 @@ pub fn movement_actions(world: &mut World, player: &mut Player, entity: &mut Ent
       'a' => x -= 1,
       's' => y += 1,
       'd' => x += 1,
-      _ => println!("Error")
+      _ => println!("DebugError: In movement_actions")
   }
   let board = get_board(world, player.last_display_state.clone());
   

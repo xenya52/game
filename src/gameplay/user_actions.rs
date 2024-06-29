@@ -1,6 +1,5 @@
 use crate::game_logic::{Entity, Player, Displaying, MoveDirections};
-use crate::utils::{get_board, find_char_in_board};
-use crate::world::{Block, World};
+use crate::world::World;
 use crate::gameplay::{movement_actions, inventory_actions};
 //////////////////////
 ///External imports///
@@ -40,7 +39,7 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
       's' => Player::movement(player, MoveDirections::Down),
       'd' => Player::movement(player, MoveDirections::Right),
       'r' => Player::control_being(player, entity),
-      _ => println!("Error: Invalid input in handle_input"),
+      _ => println!("DebugError: Invalid input in handle_input, spectator move"),
     }
   }
   else {
@@ -50,8 +49,14 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
         'a' => Entity::movement(player, entity, MoveDirections::Left, world),
         's' => Entity::movement(player, entity, MoveDirections::Down, world),
         'd' => Entity::movement(player, entity, MoveDirections::Right, world),
-        't' => player.current_entity = "Nothing".to_string(),
-        _ => println!("Error"),
+        'r' => player.current_entity = "Nothing".to_string(),
+        _ => println!("DebugError: Invalid input in handle_input control being, while moving entity"),
+      }
+    }
+    else {
+      match player.last_input {
+        'r' => player.current_entity = "Nothing".to_string(),
+        _ => println!("DebugError: Invalid input in handle_input control being")
       }
     }
   }
