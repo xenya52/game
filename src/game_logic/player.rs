@@ -18,8 +18,8 @@ pub enum Displaying {
 
 pub struct Player {
   pub last_display_state: Displaying,
-  pub current_entity: String,
   pub display_state: Displaying,
+  pub current_entity: Entity,
   pub last_input: char,
   pub turns: usize,
   pub y: usize,
@@ -29,7 +29,7 @@ impl Player {
   pub fn new(_y: usize, _x: usize) -> Self {
     Player {
       last_input: 'E',
-      current_entity: "Nothing".to_string(),
+      current_entity: Entity::empty(),
       display_state: Displaying::Overworld,
       last_display_state: Displaying::Overworld,
       turns: 0,

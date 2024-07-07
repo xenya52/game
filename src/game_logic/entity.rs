@@ -48,6 +48,9 @@ impl BasicNeeds {
             confident,
         }
     }
+    pub fn empty() -> Self {
+      BasicNeeds::new(0,0,0)
+    } 
 }
 //////////
 //Entity//
@@ -75,6 +78,9 @@ impl Entity {
             basic_needs,
             inventory: Inventory::new(inventory_space),
         }
+    }
+    pub fn empty() -> Self {
+      Entity::new(0, 0, "empty".to_string(), 0, 0, 0, BasicNeeds::empty(), 0) 
     }
     pub fn movement(player: &mut Player, entity: &mut Entity, movement: MoveDirections, world: &mut World) {
       let board = get_board(world, player.display_state.clone());
