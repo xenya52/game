@@ -39,15 +39,15 @@ impl Player {
   }
   pub fn debug(player: &Player) {
     println!("x = {}, y = {}, turns = {}", player.x, player.y, player.turns);
-    println!("cur_entity = {}", player.current_entity);
+    println!("cur_entity = {}", player.current_entity.name);
   }
   pub fn control_being(player: &mut Player, entity: &mut Entity) {
-    if player.current_entity == "Nothing"  && player.x == entity.x && player.y == entity.y {
-      player.current_entity = entity.name.clone();
+    if player.current_entity.name == "empty"  && player.x == entity.x && player.y == entity.y {
+      player.current_entity.name = entity.name.clone();
       println!("Controls the entity now");
     }
     else {
-      player.current_entity = "Nothing".to_string();
+      player.current_entity.name = "empty".to_string();
     }
   }
   pub fn movement(player: &mut Player, movement: MoveDirections) {

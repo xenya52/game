@@ -32,7 +32,7 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   if player.display_state == Displaying::Inventory {
     inventory_actions(player, entity, world);
   }
-  else if player.current_entity == "Nothing" {
+  else if player.current_entity.name == "empty" {
     match player.last_input {
       'w' => Player::movement(player, MoveDirections::Up),
       'a' => Player::movement(player, MoveDirections::Left),
@@ -49,13 +49,13 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
         'a' => Entity::movement(player, entity, MoveDirections::Left, world),
         's' => Entity::movement(player, entity, MoveDirections::Down, world),
         'd' => Entity::movement(player, entity, MoveDirections::Right, world),
-        'r' => player.current_entity = "Nothing".to_string(),
+        'r' => player.current_entity.name = "empty".to_string(),
         _ => println!("DebugError: Invalid input in handle_input control being, while moving entity"),
       }
     }
     else {
       match player.last_input {
-        'r' => player.current_entity = "Nothing".to_string(),
+        'r' => player.current_entity.name = "empty".to_string(),
         _ => println!("DebugError: Invalid input in handle_input control being")
       }
     }
