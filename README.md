@@ -1,4 +1,5 @@
 # TODOS
+- correct syntax, uniformly code e.g _test -> test
 - implement buildable structures
 - Let spawn caves randomly and make then unique
 - implement render distance
