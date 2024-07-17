@@ -1,4 +1,4 @@
-mod movment_event_listener;
+mod movment_event_listener; //Events after a player turn
 mod movement_functions; //functions so the entitys can move
 mod user_actions; //Interactions methods for the user
 

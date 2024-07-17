@@ -1,6 +1,8 @@
-use std::usize;
-
 use crate::world::{init_overworld, add_border, remove_border, Block, Board, World};
+//////////////////////
+///External imports///
+//////////////////////
+use std::usize;
 
 pub fn rezize_overworld_event(world: &mut World, tick: u32, curr_number: u32) {
   if curr_number % tick == 0 && curr_number != 0 { //curr number means like the turns and tick

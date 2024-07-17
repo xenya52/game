@@ -1,13 +1,12 @@
-use crate::{
-  utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board, choose_between_two_blocks}, 
-  world::{Board, Block}};
+use crate::utils::{get_rdm_yx, is_inside_the_grid, find_char_in_board, choose_between_two_blocks};
+use crate::world::{Board, Block};
+
 pub fn add_border(given_board: &mut Board) {
   let y_len: usize = given_board.len();
     let x_len: usize = given_board[0].len();
     for y in 0..y_len {
         for x in 0..x_len {
             if x >= x_len - 1 || x <= 0 || y >= y_len - 1 || y <= 0 {
-                //Setting x border
                 given_board[y][x] = Block::new_predefined_set()[6].clone()
             }
         }
@@ -19,17 +18,11 @@ pub fn remove_border(given_board: &mut Board) {
     for y in 0..y_len {
         for x in 0..x_len {
             if x >= x_len - 1 || x <= 0 || y >= y_len - 1 || y <= 0 {
-                //Setting x border
                 given_board[y][x] = Block::new_predefined_set()[5].clone()
             }
         }
     }
 }
-
-
-////////////////////
-//World generation//
-////////////////////
 pub fn add_random_mountain(board: &mut Board) -> bool {
   let yx = get_rdm_yx(board);
   let yx_space = vec![yx[0] + 2, yx[1] + 2];

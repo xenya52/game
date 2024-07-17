@@ -28,9 +28,6 @@ impl Inventory {
             }
         }
     }
-    pub fn remove(inventory: &mut Inventory, index: usize) {
-        inventory.items[index] = "---".to_string();
-    }
 }
 
 #[derive(Clone)]
@@ -52,9 +49,6 @@ impl BasicNeeds {
       BasicNeeds::new(0,0,0)
     } 
 }
-//////////
-//Entity//
-//////////
 #[derive(Clone)]
 pub struct Entity<> {
     pub y: usize,

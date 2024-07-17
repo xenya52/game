@@ -4,14 +4,10 @@ use crate::gameplay::{movement_actions, inventory_actions};
 //////////////////////
 ///External imports///
 //////////////////////
-pub use rand::{thread_rng, Rng, seq::SliceRandom};
 use crossterm::{event::{read, Event, KeyCode}, terminal::{disable_raw_mode, enable_raw_mode}};
-////////////////
-//User actions//
-////////////////
+
 pub fn get_user_input() -> char {
   enable_raw_mode().expect("Failed to enable raw mode");
-
   let input: char;
   loop {
       if let Event::Key(key_event) = read().expect("Failed to read event") {
@@ -24,7 +20,6 @@ pub fn get_user_input() -> char {
           }
       }
   }
-
   disable_raw_mode().expect("Failed to disable raw mode");
   input
 }

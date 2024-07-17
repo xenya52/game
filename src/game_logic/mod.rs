@@ -2,7 +2,7 @@ mod display; //Stuff to display various things in the world
 mod entity; //Everything what has todo with a single entity and showing them
 mod genral_game_logic; //Generl game logic functions
 mod spawns; //Stuff to spawn entitys
-mod player;
+mod player; //The attributes for the player itself, like general stats
 
 pub use display::{print_given_board, print_keybindings};
 pub use entity::{Entity, BasicNeeds, dead_entity, entity_moved};

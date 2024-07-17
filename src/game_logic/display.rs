@@ -1,5 +1,3 @@
-use std::io;
-
 use crate::world::Board;
 use crate::game_logic::Player;
 //////////////////////
