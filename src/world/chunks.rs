@@ -5,36 +5,40 @@ use crate::game_logic::place_minion;
 
 pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
   let mut board: Vec<Vec<Block>> = vec![
-                                   vec![Block::new_predefined_set()[5].clone();
-                                  x_size];y_size];
+                                     vec![
+                                       Block::new_predefined_set()[5]
+                                       .clone();x_size
+                                     ];
+                                     y_size
+                                   ];
   let mut counter = 0;
   print!("Generate mountians ... ");
   loop {
-      counter += 1;
-      add_random_mountain(&mut board);
-      if counter == 10 {
-          break;
-      }
+    counter += 1;
+    add_random_mountain(&mut board);
+    if counter == 10 {
+      break;
+    }
   }
   counter = 0;
   println!("Done!");
   print!("Generate water ... ");
   loop {
-      counter += 1;
-      add_radom_water(&mut board);
-      if counter == 3 {
-          break;
-      }
+    counter += 1;
+    add_radom_water(&mut board);
+    if counter == 3 {
+      break;
+    }
   }
   counter = 0;
   println!("Done!");
   print!("Generate food ... ");
   loop {
-      counter += 1;
-      add_radom_food(&mut board);
-      if counter == 4 {
-          break;
-      }
+    counter += 1;
+    add_radom_food(&mut board);
+    if counter == 4 {
+      break;
+    }
   }
   println!("Done!");
   print!("Generate cave entrance ...");
@@ -47,27 +51,31 @@ pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
 }
 
 pub fn init_cave(x_size: usize, y_size: usize) -> Board {
-    let mut board: Vec<Vec<Block>> = vec![vec![
-        Block::new_predefined_set()[5].clone();
-        x_size];y_size];
+  let mut board: Vec<Vec<Block>> = vec![
+                                     vec![
+                                       Block::new_predefined_set()[5].clone();
+                                       x_size
+                                     ];
+                                   y_size
+                                   ];
   let mut count = 0;
   print!("Generate rock ... ");
   loop {
-      count += 1;
-      add_random_mountain(&mut board);
-      if count == 10 {
-          break;
-      }
+    count += 1;
+    add_random_mountain(&mut board);
+    if count == 10 {
+      break;
+    }
   }
   count = 0;
   println!("Done!");
   print!("Generate water ... ");
   loop {
-      count += 1;
-      add_radom_water(&mut board);
-      if count == 3 {
-          break;
-      }
+    count += 1;
+    add_radom_water(&mut board);
+    if count == 3 {
+      break;
+    }
   }
   println!("Done!");
   print!("Set one minion (debug) in board ... ");

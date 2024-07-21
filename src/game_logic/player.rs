@@ -1,8 +1,6 @@
 use crate::world::{Block, Board};
 use crate::game_logic::Entity;
-/////////////////
-//Print a board//
-/////////////////
+
 pub enum MoveDirections {
   Up,
   Down,
