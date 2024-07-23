@@ -5,18 +5,18 @@ mod world;
 use utils::find_char_in_board;
 use world::{init_cave, init_overworld, World};
 mod game_logic;
-use game_logic::{BasicNeeds, Entity, game_over, place_minion, 
+use game_logic::{BasicNeeds, Entity, game_over, place_minion_ascii, 
     entity_moved, print_given_board, print_keybindings,
     Player, Displaying};
 fn main() {
     let overworld = init_overworld(8,8);
     let cave = init_cave(32,16);
     let mut world: World = World::new(overworld, cave);
-    place_minion(&mut world.overworld);
     
     let mut player = Player::new(1, 1);
-    let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     
+    let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
+    place_minion_ascii(&mut world.overworld);
     let entity_coords = find_char_in_board(&world.overworld, '@');
     let mut debug_minion: Entity = Entity::new(entity_coords[1], entity_coords[0],"minion_debug".to_string(),5, 1, 0, starter_needs, 20);
     

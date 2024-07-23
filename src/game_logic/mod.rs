@@ -7,5 +7,5 @@ mod player; //The attributes for the player itself, like general stats
 pub use display::{print_given_board, print_keybindings};
 pub use entity::{Entity, BasicNeeds, dead_entity, entity_moved};
 pub use genral_game_logic::game_over;
-pub use spawns::place_minion;
+pub use spawns::place_minion_ascii;
 pub use player::{Displaying, MoveDirections, Player};

@@ -1,7 +1,7 @@
 use crate::world::{Board, Block, add_radom_food, 
     add_radom_water, add_random_mountain, add_cave, 
     add_border, add_cave_exit};
-use crate::game_logic::place_minion;
+use crate::game_logic::place_minion_ascii;
 
 pub fn init_overworld(x_size: usize, y_size: usize) -> Board {
   let mut board: Vec<Vec<Block>> = vec![
@@ -79,7 +79,7 @@ pub fn init_cave(x_size: usize, y_size: usize) -> Board {
   }
   println!("Done!");
   print!("Set one minion (debug) in board ... ");
-  place_minion(&mut board);
+  place_minion_ascii(&mut board);
   println!("Done!");
   print!("Generate cave exit ...");
   add_cave_exit(&mut board);
