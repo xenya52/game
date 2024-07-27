@@ -23,4 +23,5 @@ pub fn print_given_board(given_board: &mut Board, player: &mut Player) {
 pub fn print_keybindings() {
   println!("Movement [w] [a] [s] [d]");
   println!("Inventory [i]");
+  println!("Get entity: [r], Out entity: [f]")
 }

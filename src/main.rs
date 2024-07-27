@@ -35,8 +35,7 @@ fn main() {
         player.last_input = get_user_input();
         handle_input(&mut player, &mut world, &mut debug_minion);
         if player.display_state != Displaying::Inventory {
-          entity_moved(&mut debug_minion);
-          rezize_overworld_event(&mut world, 25, player.turns as u32);
+          entity_moved(&mut world, &mut debug_minion, &mut player);
         }
         print_keybindings();
     }

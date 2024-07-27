@@ -4,7 +4,7 @@ use crate::world::{init_overworld, add_border, remove_border, Block, Board, Worl
 //////////////////////
 use std::usize;
 
-pub fn rezize_overworld_event(world: &mut World, tick: u32, curr_number: u32) {
+pub fn rezize_overworld_event(world: &mut World, tick: usize, curr_number: usize) {
   if curr_number % tick == 0 && curr_number != 0 { //curr number means like the turns and tick
                                                    //after how much moves something should happen
     let cur_y_size = world.overworld.len();

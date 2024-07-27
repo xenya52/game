@@ -1,4 +1,5 @@
 use crate::game_logic::{Player, MoveDirections};
+use crate::gameplay::rezize_overworld_event;
 use crate::utils::get_board;
 use crate::world::{Block, World};
 //////////////////////
@@ -131,6 +132,8 @@ impl Entity {
   }
   pub fn display_entity_inventory(entity: &mut Entity) {
     print!("<-=-=-=-=-=-=-=->\n<");
+    print!("<-=-Inventory-=->\n<");
+    print!("<-=-=-=-=-=-=-=->\n<");
     let mut index = entity.inventory.items.len();
     while index > 0 {
       let cur_item = &entity.inventory.items[index-1];
@@ -152,13 +155,18 @@ impl Entity {
       }
       index -= 1;
     }
-    println!("\n<-=-=-=-=-=-=-=->");
+    print!("\n<-=-=-=-=-=-=-=->");
+    print!("<-=-=Crafting-=->\n<");
+    print!("<-=-=-=-=-=-=-=->\n<");
   }
 }
-pub fn entity_moved(entity: &mut Entity) {
-  entity.actions += 1;
-  entity.basic_needs.starve -= if thread_rng().gen_bool(0.9) { 0 } else { 1 };
-  entity.basic_needs.hydrate -= if thread_rng().gen_bool(0.9) { 0 } else { 2 };
+pub fn entity_moved(world: &mut World, entity: &mut Entity, player: &mut Player) {
+  if player.current_entity.name != "empty" {
+    entity.actions += 1;
+    entity.basic_needs.starve -= if thread_rng().gen_bool(0.9) { 0 } else { 1 };
+    entity.basic_needs.hydrate -= if thread_rng().gen_bool(0.9) { 0 } else { 2 };
+    rezize_overworld_event(world, 4, player.turns);
+  }
 }
 pub fn dead_entity(entity: Entity) -> bool 
 {    
