@@ -1,4 +1,5 @@
 # TODOS
+- Add moods to the game that impacts strength health and basic needs
 - implement buildable structures
 - Let spawn caves randomly and make then unique
 - implement render distance
