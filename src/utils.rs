@@ -1,5 +1,5 @@
 use crate::world::{Board, Block, World};
-use crate::game_logic::Displaying;
+use crate::game_logic::{Displaying, Player};
 //////////////////////
 ///External imports///
 //////////////////////
@@ -51,4 +51,37 @@ pub fn get_board(world: &mut World, last_display: Displaying) -> &mut Board {
   else {
     return &mut world.cave;
   }
+}
+pub fn create_rendered_board(board: &mut Board, player: &mut Player, render_distance: usize) -> Board {
+  println!("Run into the create_rendered_board function!");
+  let mut rendered_board: Vec<Vec<Block>> = vec![
+                                     vec![
+                                       Block::new_predefined_set()[5].clone();
+                                       render_distance
+                                     ];
+                                   render_distance
+                                   ];
+  let start_x: usize;
+  println!("Start divison = {}", player.x - render_distance / 2);
+  if player.x - render_distance / 2 > board[0].len() {
+    start_x = board[0].len();
+  }
+  else {
+      start_x = player.x - render_distance / 2
+  }
+  let start_y: usize;
+  if player.y - render_distance / 2 > board[0].len() {
+    start_y = board[0].len();
+  }
+  else {
+      start_y = player.y - render_distance / 2
+  }
+  println!("Start X = {}", start_x);
+  println!("Start Y = {}", start_y);
+  for y in 0..render_distance {
+    for x in 0..render_distance {
+      rendered_board[y][x] = board[start_y + y][start_x + x].clone();
+    }
+  }
+  return rendered_board;
 }
