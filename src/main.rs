@@ -13,7 +13,7 @@ fn main() {
     let cave = init_cave(32,16);
     let mut world: World = World::new(overworld, cave);
     
-    let mut player = Player::new(1, 1);
+    let mut player = Player::new(3, 3, 5);
     
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     place_minion_ascii(&mut world.overworld);

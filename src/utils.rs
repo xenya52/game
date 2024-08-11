@@ -62,20 +62,31 @@ pub fn create_rendered_board(board: &mut Board, player: &mut Player, render_dist
                                    render_distance
                                    ];
   let start_x: usize;
-  println!("Start divison = {}", player.x - render_distance / 2);
-  if player.x - render_distance / 2 > board[0].len() {
-    start_x = board[0].len();
+  if player.x > render_distance / 2 {
+    if player.x - render_distance / 2 > board[0].len() {
+      start_x = board[0].len();
+    }
+    else {
+        start_x = player.x - render_distance / 2 + 1
+    }
   }
   else {
-      start_x = player.x - render_distance / 2
+    start_x = 0;
   }
   let start_y: usize;
-  if player.y - render_distance / 2 > board[0].len() {
-    start_y = board[0].len();
+  if player.y > render_distance / 2 {
+    if player.y - render_distance / 2 > board[0].len() {
+      start_y = board[0].len();
+    }
+    else {
+        start_y = player.y - render_distance / 2 + 1
+    }
   }
   else {
-      start_y = player.y - render_distance / 2
+    start_y = 0;
   }
+  println!("Player X = {}", player.x);
+  println!("Player Y = {}", player.y);
   println!("Start X = {}", start_x);
   println!("Start Y = {}", start_y);
   for y in 0..render_distance {

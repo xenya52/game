@@ -17,6 +17,9 @@ pub enum Displaying {
 pub struct Player {
   pub last_display_state: Displaying,
   pub display_state: Displaying,
+  pub render_distance_x: usize,
+  pub render_distance_y: usize,
+  pub render_distance: usize,
   pub current_entity: Entity,
   pub last_input: char,
   pub turns: usize,
@@ -24,15 +27,18 @@ pub struct Player {
   pub x: usize,
 }
 impl Player {
-  pub fn new(_y: usize, _x: usize) -> Self {
+  pub fn new(y: usize, x: usize, render_distance: usize) -> Self {
     Player {
-      last_input: 'E',
       current_entity: Entity::empty(),
       display_state: Displaying::Overworld,
       last_display_state: Displaying::Overworld,
+      render_distance_x: x,
+      render_distance_y: y,
+      render_distance,
+      last_input: 'E',
       turns: 0,
-      y: _y,
-      x: _x,
+      y,
+      x,
     }
   }
   pub fn control_being(player: &mut Player, entity: &mut Entity) {
