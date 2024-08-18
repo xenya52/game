@@ -13,7 +13,8 @@ pub fn print_given_board(given_board: &mut Board, player: &mut Player) {
   for (_y, row) in rendered_board.iter_mut().enumerate() {
     for (_x, col) in row.iter_mut().enumerate() {
       let styled_content = style(col.display_ascii)
-        .with(col.display_color);
+        .with(col.display_color)
+        .on(crossterm::style::Color::Rgb { r: (0), g: (0), b: (0) });
       if player_y == _y && player_x == _x {
         print!("{}", styled_content.on_yellow())
       }
