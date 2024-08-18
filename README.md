@@ -1,6 +1,6 @@
 # TODOS
 - Add a background color
-- implement render distance function
+- Make a better
 - Add moods to the game that impacts strength health and basic needs
 - implement buildable structures
 - Let spawn caves randomly and make then unique
