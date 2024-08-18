@@ -17,8 +17,6 @@ pub enum Displaying {
 pub struct Player {
   pub last_display_state: Displaying,
   pub display_state: Displaying,
-  pub render_distance_x: usize,
-  pub render_distance_y: usize,
   pub render_distance: usize,
   pub current_entity: Entity,
   pub last_input: char,
@@ -32,8 +30,6 @@ impl Player {
       current_entity: Entity::empty(),
       display_state: Displaying::Overworld,
       last_display_state: Displaying::Overworld,
-      render_distance_x: x,
-      render_distance_y: y,
       render_distance,
       last_input: 'E',
       turns: 0,

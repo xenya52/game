@@ -9,11 +9,11 @@ use game_logic::{BasicNeeds, Entity, game_over, place_minion_ascii,
     entity_moved, print_given_board, print_keybindings,
     Player, Displaying};
 fn main() {
-    let overworld = init_overworld(8,8);
+    let overworld = init_overworld(500,500);
     let cave = init_cave(32,16);
     let mut world: World = World::new(overworld, cave);
     
-    let mut player = Player::new(3, 3, 5);
+    let mut player = Player::new(3, 3, 8);
     
     let starter_needs: BasicNeeds = BasicNeeds::new(10, 10, 10);
     place_minion_ascii(&mut world.overworld);

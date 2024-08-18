@@ -85,10 +85,6 @@ pub fn create_rendered_board(board: &mut Board, player: &mut Player, render_dist
   else {
     start_y = 0;
   }
-  println!("Player X = {}", player.x);
-  println!("Player Y = {}", player.y);
-  println!("Start X = {}", start_x);
-  println!("Start Y = {}", start_y);
   for y in 0..render_distance {
     for x in 0..render_distance {
       rendered_board[y][x] = board[start_y + y][start_x + x].clone();
