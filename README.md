@@ -1,4 +1,5 @@
 # TODOS
+- Rework movement functions for the command pattern
 - Add a background color
 - Make a better
 - Add moods to the game that impacts strength health and basic needs
