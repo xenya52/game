@@ -1,27 +1,6 @@
-use std::vec;
-
 use crate::game_logic::{Player, Entity};
 use crate::world::{Block, World};
 use crate::utils::get_board;
-
-pub struct ExecuteCommand {
-  pub command: FunctionX,
-  pub history: Vec<String>
-}
-impl ExecuteCommand {
-  pub fn new(command: FunctionX) -> Self {
-    ExecuteCommand(
-      command,
-      history: vec["".to_string()]
-    )
-  }
-  pub fn execute() {
-
-  } 
-  pub fn undo() {
-
-  }  
-}
 
 pub fn inventory_actions(player: &mut Player, entity: &mut Entity, world: &mut World) {
   let y = player.y;
