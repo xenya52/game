@@ -1,10 +1,10 @@
 mod utils;
 mod gameplay;
-use gameplay::{get_user_input,handle_input, rezize_overworld_event};
+use gameplay::{ get_user_input,handle_input };
 mod world;
 use utils::find_char_in_board;
 use world::{init_cave, init_overworld, World};
-mod game_logic;
+mod game_logic; 
 use game_logic::{BasicNeeds, Entity, game_over, place_minion_ascii, 
     entity_moved, print_given_board, print_keybindings,
     Player, Displaying};
