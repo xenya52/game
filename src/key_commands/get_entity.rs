@@ -4,8 +4,8 @@ pub struct LeftCommand {
   backup: String,
 }
 impl Command for LeftCommand {
-  fn execute(&mut self, player: &mut Player) -> bool {
-      player.control_being
+  fn execute(&mut self, player: &mut Player, name: String) -> bool {
+      player.control_being(name);
       return true
   }
 

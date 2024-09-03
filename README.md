@@ -1,7 +1,7 @@
 # TODOS
 - Rework movement functions for the command pattern
 - Add a background color
-- Make a better
+- Refactor code
 - Add moods to the game that impacts strength health and basic needs
 - implement buildable structures
 - Let spawn caves randomly and make then unique
