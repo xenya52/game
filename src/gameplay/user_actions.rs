@@ -1,6 +1,7 @@
 use crate::game_logic::{Entity, Player, Displaying, MoveDirections};
 use crate::world::World;
 use crate::gameplay::{movement_actions, inventory_actions};
+use crate::key_commands::{ DownCommand, UpCommand, LeftCommand, RightCommand};
 //////////////////////
 ///External imports///
 //////////////////////
