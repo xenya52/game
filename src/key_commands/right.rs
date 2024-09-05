@@ -1,4 +1,5 @@
 use crate::game_logic::Player;
+use super::Command;
 
 pub struct RightCommand {
   backup: String,
