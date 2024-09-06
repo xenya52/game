@@ -1,7 +1,7 @@
 use crate::game_logic::{Entity, Player, Displaying, MoveDirections};
 use crate::world::World;
 use crate::gameplay::{movement_actions, inventory_actions};
-use crate::key_commands::{ DownCommand, UpCommand, LeftCommand, RightCommand};
+use crate::key_commands::{Command, DownCommand, UpCommand, LeftCommand, RightCommand};
 //////////////////////
 ///External imports///
 //////////////////////
@@ -41,7 +41,7 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   else {
     if movement_actions(world, player, entity) {
       match player.last_input {
-        'w' => Entity::movement(player, entity, MoveDirections::Up, world),
+        'w' => |s| Command::execute(s, UpCommand),
         'a' => Entity::movement(player, entity, MoveDirections::Left, world),
         's' => Entity::movement(player, entity, MoveDirections::Down, world),
         'd' => Entity::movement(player, entity, MoveDirections::Right, world),

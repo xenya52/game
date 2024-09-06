@@ -6,12 +6,12 @@ pub struct LeftCommand {
 }
 impl Command for LeftCommand {
   fn execute(&mut self, player: &mut Player) -> bool {
-      player.last_display_state = player.display_state;
+      player.last_display_state = player.display_state.clone();
       player.display_state = Displaying::Inventory;
       return true
   }
 
   fn undo(&mut self, player: &mut Player) {
-      player.display_state = player.last_display_state;
+      player.display_state = player.last_display_state.clone();
   }
 }
