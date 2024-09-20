@@ -2,7 +2,6 @@ mod up;
 mod down;
 mod left;
 mod right;
-mod inventory;
 
 pub use up::UpCommand;
 pub use down::DownCommand;
