@@ -41,12 +41,12 @@ pub fn handle_input(player: &mut Player, world: &mut World, entity: &mut Entity)
   else {
     if movement_actions(world, player, entity) {
       match player.last_input {
-        'w' => Command::execute(UpCommand, &mut player),
-        'a' => |s| Command::execute(LeftCommand, &mut player),
-        's' => |s| Command::execute(s, &mut player),
-        'd' => |s| Command::execute(s, &mut player),
-        'r' => player.current_entity.name = "empty".to_string(),
-        _ => println!("DebugError: Invalid input in handle_input control being, while moving entity"),
+        'w' => Command::execute(&mut player),
+        'a' => Command::execute(&mut player),
+        's' => Command::execute(&mut player),
+        'd' => Command::execute(&mut player),
+        // 'r' => player.current_entity.name = "empty".to_string(),
+        // _ => println!("DebugError: Invalid input in handle_input control being, while moving entity"),
       }
     }
     else {

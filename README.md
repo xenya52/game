@@ -1,4 +1,5 @@
 # TODOS
+- implement the compant pattern for key input
 - trying to implement into user_actions instead of movment function in player
 - install prettier
 - Rework movement functions for the command pattern
