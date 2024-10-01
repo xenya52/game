@@ -1,10 +1,8 @@
 # TODOS
-- implement the compant pattern for key input
+- implement the compand pattern for key input
 - trying to implement into user_actions instead of movment function in player
-- install prettier
 - Rework movement functions for the command pattern
 - Add a background color
-- Refactor code
 - Add moods to the game that impacts strength health and basic needs
 - implement buildable structures
 - Let spawn caves randomly and make then unique
