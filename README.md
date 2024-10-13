@@ -1,6 +1,7 @@
 # TODOS
 - implement the compand pattern for key input
 - trying to implement into user_actions instead of movment function in player
+- make better world generation
 - Rework movement functions for the command pattern
 - Add a background color
 - Add moods to the game that impacts strength health and basic needs
